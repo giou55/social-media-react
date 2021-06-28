@@ -4,7 +4,7 @@
     overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar {
     width: 5px;
 }
 ::-webkit-scrollbar-track {
