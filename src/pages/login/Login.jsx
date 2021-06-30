@@ -1,13 +1,23 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import "./login.css";
+import { loginCall } from "../../apiCalls";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Login() {
 	const email = useRef();
 	const password = useRef();
 
-    const handleClick = (e) => {
-        e.preventDefault();
-	}
+	const { user, dispatch } = useContext(AuthContext);
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		loginCall(
+			{ email: email.current.value, password: password.current.value },
+			dispatch
+		);
+	};
+
+	console.log(user);
 
 	return (
 		<div className="login">
@@ -21,11 +31,26 @@ export default function Login() {
 				</div>
 				<div className="loginRight" onSubmit={handleClick}>
 					<form className="loginBox">
-						<input placeholder="Email" type="email" required className="loginInput" ref={email} />
-						<input placeholder="Password" type="password" required minLength="6" className="loginInput" ref={password} />
-                        <button className="loginButton">Log in</button>
-                        <span className="loginForgot">Forgot Password?</span>
-                        <button className="loginRegisterButton">Create a New Account</button>
+						<input
+							placeholder="Email"
+							type="email"
+							required
+							className="loginInput"
+							ref={email}
+						/>
+						<input
+							placeholder="Password"
+							type="password"
+							required
+							minLength="6"
+							className="loginInput"
+							ref={password}
+						/>
+						<button className="loginButton">Log in</button>
+						<span className="loginForgot">Forgot Password?</span>
+						<button className="loginRegisterButton">
+							Create a New Account
+						</button>
 					</form>
 				</div>
 			</div>
