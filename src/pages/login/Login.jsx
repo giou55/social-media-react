@@ -1,6 +1,14 @@
+import { useRef } from "react";
 import "./login.css";
 
 export default function Login() {
+	const email = useRef();
+	const password = useRef();
+
+    const handleClick = (e) => {
+        e.preventDefault();
+	}
+
 	return (
 		<div className="login">
 			<div className="loginWrapper">
@@ -11,14 +19,14 @@ export default function Login() {
 						Friendbook.
 					</span>
 				</div>
-				<div className="loginRight">
-					<div className="loginBox">
-						<input placeholder="Email" className="loginInput" />
-						<input placeholder="Password" className="loginInput" />
+				<div className="loginRight" onSubmit={handleClick}>
+					<form className="loginBox">
+						<input placeholder="Email" type="email" required className="loginInput" ref={email} />
+						<input placeholder="Password" type="password" required minLength="6" className="loginInput" ref={password} />
                         <button className="loginButton">Log in</button>
                         <span className="loginForgot">Forgot Password?</span>
                         <button className="loginRegisterButton">Create a New Account</button>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
