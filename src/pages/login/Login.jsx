@@ -18,8 +18,6 @@ export default function Login() {
 		);
 	};
 
-	console.log(user);
-
 	return (
 		<div className="login">
 			<div className="loginWrapper">
@@ -47,7 +45,7 @@ export default function Login() {
 							className="loginInput"
 							ref={password}
 						/>
-						<button className="loginButton">
+						<button className="loginButton" type="submit">
 							{isFetching ? (
 								<CircularProgress color="white" size="20px" />
 							) : (
