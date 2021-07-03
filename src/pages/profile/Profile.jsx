@@ -5,7 +5,7 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import "./profile.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import {useParams} from "react-router";
+import { useParams } from "react-router";
 
 export default function Profile() {
 	const [user, setUser] = useState({});
@@ -31,16 +31,18 @@ export default function Profile() {
 						<div className="profileCover">
 							<img
 								src={
-									user.coverPicture ||
-									PF + "/person/noCover.png"
+									user.coverPicture
+										? PF + user.coverPicture
+										: PF + "/person/noCover.png"
 								}
 								alt=""
 								className="profileCoverImg"
 							/>
 							<img
 								src={
-									user.profilePicture ||
-									PF + "/person/noAvatar.png"
+									user.profilePicture
+										? PF + user.profilePicture
+										: PF + "/person/noAvatar.png"
 								}
 								alt=""
 								className="profileUserImg"
