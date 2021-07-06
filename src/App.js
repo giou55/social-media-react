@@ -19,7 +19,7 @@ function App() {
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					{user ? <Home /> : <Register />}
+					{user ? <Home /> : <Login />}
 				</Route>
 				<Route path="/login">
 					{user ? <Redirect to="/" /> : <Login />}
@@ -28,7 +28,7 @@ function App() {
 					{user ? <Redirect to="/" /> : <Register />}
 				</Route>
 				<Route path="/profile/:username">
-					<Profile />
+					{user ? <Profile /> : <Redirect to="/login" />}
 				</Route>
 			</Switch>
 		</Router>

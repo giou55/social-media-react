@@ -1,6 +1,6 @@
 import "./register.css";
 import { useRef } from "react";
-import { useHistory } from "react-router";
+import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Register() {
@@ -18,65 +18,81 @@ export default function Register() {
 			const user = {
 				username: username.current.value,
 				email: email.current.value,
-				password: password.current.value
+				password: password.current.value,
 			};
 			try {
 				await axios.post("/auth/register", user);
 				history.push("/login");
-
 			} catch (err) {
 				console.log(err);
 			}
-			
 		}
 	};
 
 	return (
-		<div className="login">
-			<div className="loginWrapper">
-				<div className="loginLeft">
-					<h3 className="loginLogo">Friendbook</h3>
-					<span className="loginDesc">
+		<div className="register">
+			<div className="registerWrapper">
+				<div className="registerLeft">
+					<h3 className="registerLogo">Friendbook</h3>
+					<span className="registerDesc">
 						Connect with friends and the world around you on
 						Friendbook.
 					</span>
 				</div>
-				<div className="loginRight">
-					<form className="loginBox" onSubmit={handleClick}>
+				<div className="registerRight">
+					<form className="registerBox" onSubmit={handleClick}>
+						<label htmlFor="username">
+							<b>Username</b>
+						</label>
 						<input
-							placeholder="Username"
+							name="username"
+							id="username"
 							required
 							ref={username}
-							className="loginInput"
+							className="registerInput"
 						/>
+						<label htmlFor="email">
+							<b>Email</b>
+						</label>
 						<input
-							placeholder="Email"
+							name="email"
+							id="email"
 							required
 							ref={email}
-							className="loginInput"
+							className="registerInput"
 							type="email"
 						/>
+						<label htmlFor="psw">
+							<b>Password</b>
+						</label>
 						<input
-							placeholder="Password"
+							name="password"
+							id="password"
 							required
 							ref={password}
-							className="loginInput"
+							className="registerInput"
 							type="password"
 							minLength="6"
 						/>
+						<label htmlFor="psw-again">
+							<b>Password Again</b>
+						</label>
 						<input
-							placeholder="Password Again"
+							name="psw-again"
+							id="psw-again"
 							required
 							ref={passwordAgain}
-							className="loginInput"
+							className="registerInput"
 							type="password"
 						/>
-						<button className="loginButton" type="submit">
+						<button className="registerButton" type="submit">
 							Sign up
 						</button>
-						<button className="loginRegisterButton">
-							Log into Account
-						</button>
+						<Link to="/login">
+							<button className="registerRegisterButton">
+								Log into Account
+							</button>
+						</Link>
 					</form>
 				</div>
 			</div>
