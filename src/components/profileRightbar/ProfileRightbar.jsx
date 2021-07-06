@@ -3,7 +3,6 @@ import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
-
 import { Add, Remove } from "@material-ui/icons";
 
 export default function ProfileRightbar({ user }) {
@@ -11,8 +10,12 @@ export default function ProfileRightbar({ user }) {
 	const { user: currentUser, dispatch } = useContext(AuthContext);
 	const [friends, setFriends] = useState([]);
 	const [followed, setFollowed] = useState(
-		currentUser.followings.includes(user?.id)
+		currentUser.followings.includes(user?._id)
 	);
+
+	useEffect(() => {
+		setFollowed(currentUser.followings.includes(user?._id));
+	}, [currentUser, user._id]);
 
 	useEffect(() => {
 		const fetchUserFriends = async () => {

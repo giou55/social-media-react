@@ -56,7 +56,7 @@ export default function Profile() {
 					</div>
 					<div className="profileRightBottom">
 						<Feed username={username} />
-						{user && <ProfileRightbar user={user} />}
+						{user.username && <ProfileRightbar user={user} />}
 					</div>
 				</div>
 			</div>
