@@ -15,6 +15,15 @@ export default function Share() {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const desc = useRef();
 	const [file, setFile] = useState(null);
+	const [isDisabled, setIsDisabled] = useState(true);
+
+	const setButton = () => {
+		if (desc.current.value !== "") {
+			setIsDisabled(false);
+		} else {
+			setIsDisabled(true);
+		}
+	};
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -61,6 +70,7 @@ export default function Share() {
 						}
 						className="shareInput"
 						ref={desc}
+						onChange={setButton}
 					/>
 				</div>
 
@@ -75,6 +85,7 @@ export default function Share() {
 						/>
 						<Cancel
 							className="shareCancelImg"
+							fontSize="large"
 							onClick={() => setFile(null)}
 						/>
 					</div>
@@ -114,7 +125,11 @@ export default function Share() {
 							<span className="shareOptionText">Feelings</span>
 						</div>
 					</div>
-					<button className="shareButton" type="submit">
+					<button
+						className="shareButton"
+						type="submit"
+						disabled={isDisabled}
+					>
 						Share
 					</button>
 				</form>
