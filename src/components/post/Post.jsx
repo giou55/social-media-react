@@ -6,12 +6,15 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import ModalPost from "../modalPost/ModalPost";
 
-export default function Post({ post }) {
+export default function Post({ p }) {
+	const [post, setPost] = useState(p);
 	const [like, setLike] = useState(post.likes.length);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
-	const [isDisplayed, setIsDisplayed] = useState(false);
+	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
+	const [isDisplayedModal, setIsDisplayedModal] = useState(false);
 	const [user, setUser] = useState({});
 	const { user: currentUser } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -40,8 +43,8 @@ export default function Post({ post }) {
 		setIsLiked(!isLiked);
 	};
 
-	const showActions = () => {
-		setIsDisplayed(!isDisplayed);
+	const toggleActions = () => {
+		setIsDisplayedActions(!isDisplayedActions);
 	};
 
 	const deletePost = (postId) => {
@@ -51,6 +54,11 @@ export default function Post({ post }) {
 		} catch (err) {
 			console.log(err);
 		}
+	};
+
+	const showModalPost = () => {
+		setIsDisplayedActions(false);
+		setIsDisplayedModal(true);
 	};
 
 	return (
@@ -83,11 +91,13 @@ export default function Post({ post }) {
 									<>
 										<MoreVert
 											className="moreVertIcon"
-											onClick={showActions}
+											onClick={toggleActions}
 										/>
-										{isDisplayed && (
+										{isDisplayedActions && (
 											<div className="postTopRightActions">
-												<div>Edit post</div>
+												<div onClick={showModalPost}>
+													Edit post
+												</div>
 												<div
 													onClick={() =>
 														deletePost(post._id)
@@ -131,6 +141,13 @@ export default function Post({ post }) {
 						</div>
 					</div>
 				</div>
+			)}
+			{isDisplayedModal && (
+				<ModalPost
+					post={post}
+					setModal={setIsDisplayedModal}
+					updatePost={setPost}
+				/>
 			)}
 		</>
 	);
