@@ -90,6 +90,7 @@ export default function Post({ p }) {
 								{user.username === currentUser.username && (
 									<>
 										<MoreVert
+											fontSize="large"
 											className="moreVertIcon"
 											onClick={toggleActions}
 										/>

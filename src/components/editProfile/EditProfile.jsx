@@ -1,25 +1,29 @@
-import "./editPost.css";
+import "./editProfile.css";
 import { Cancel } from "@material-ui/icons";
 import { useRef } from "react";
 import axios from "axios";
 
-export default function EditPost({ post, setEditPost, updatePost }) {
+export default function EditProfile({
+	profile,
+	setEditProfile,
+	updateProfile,
+}) {
 	const editPost = useRef();
 	const postInput = useRef();
 
-	const closeEditPost = () => {
-		setEditPost(false);
+	const closeEditProfile = () => {
+		setEditProfile(false);
 	};
 
 	const clickHandler = async () => {
-		const newpost = {
-			...post,
-			desc: postInput.current.innerText,
+		const newprofile = {
+			...profile,
+			username: postInput.current.innerText,
 		};
 		try {
-			await axios.put("/posts/" + post._id, newpost);
-			updatePost(newpost);
-			setEditPost(false);
+			await axios.put("/users/" + profile._id, newprofile);
+			updateProfile(newprofile);
+			setEditProfile(false);
 		} catch (err) {
 			console.log(err);
 		}
@@ -29,8 +33,8 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 		<div className="editPost" ref={editPost}>
 			<div className="editPostWrapper">
 				<div className="editPostHeader">
-					<h3>Edit Post</h3>
-					<div className="closeEditPost" onClick={closeEditPost}>
+					<h3>Edit Profile</h3>
+					<div className="closeEditPost" onClick={closeEditProfile}>
 						<Cancel />
 					</div>
 				</div>
@@ -42,11 +46,11 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 					suppressContentEditableWarning="true"
 					ref={postInput}
 				>
-					{post.desc}
+					{profile.username}
 				</div>
 
 				<button className="editPostButton" onClick={clickHandler}>
-					Save post
+					Save profile
 				</button>
 			</div>
 		</div>
