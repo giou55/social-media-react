@@ -6,7 +6,7 @@ import axios from "axios";
 import { format } from "timeago.js";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
-import ModalPost from "../modalPost/ModalPost";
+import EditPost from "../editPost/EditPost";
 
 export default function Post({ p }) {
 	const [post, setPost] = useState(p);
@@ -14,7 +14,7 @@ export default function Post({ p }) {
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
-	const [isDisplayedModal, setIsDisplayedModal] = useState(false);
+	const [isDisplayedEditPost, setIsDisplayedEditPost] = useState(false);
 	const [user, setUser] = useState({});
 	const { user: currentUser } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -56,9 +56,9 @@ export default function Post({ p }) {
 		}
 	};
 
-	const showModalPost = () => {
+	const showEditPost = () => {
 		setIsDisplayedActions(false);
-		setIsDisplayedModal(true);
+		setIsDisplayedEditPost(true);
 	};
 
 	return (
@@ -95,7 +95,7 @@ export default function Post({ p }) {
 										/>
 										{isDisplayedActions && (
 											<div className="postTopRightActions">
-												<div onClick={showModalPost}>
+												<div onClick={showEditPost}>
 													Edit post
 												</div>
 												<div
@@ -142,10 +142,10 @@ export default function Post({ p }) {
 					</div>
 				</div>
 			)}
-			{isDisplayedModal && (
-				<ModalPost
+			{isDisplayedEditPost && (
+				<EditPost
 					post={post}
-					setModal={setIsDisplayedModal}
+					setEditPost={setIsDisplayedEditPost}
 					updatePost={setPost}
 				/>
 			)}
