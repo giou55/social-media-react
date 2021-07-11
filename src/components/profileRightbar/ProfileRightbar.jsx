@@ -98,14 +98,15 @@ export default function ProfileRightbar({ user }) {
 									src={
 										friend.profilePicture
 											? PF + friend.profilePicture
-											: PF + "/person/noAvatar.png"
+											: PF + "/users/noAvatar.png"
 									}
 									alt=""
 									className="rightbarFollowingImg"
 								/>
-								<span className="rightbarFollowingName">
-									{friend.firstname} {friend.lastname}
-								</span>
+								<div className="rightbarFollowingName">
+									<div>{friend.firstname}</div>
+									<div>{friend.lastname}</div>
+								</div>
 							</div>
 						</Link>
 					))}

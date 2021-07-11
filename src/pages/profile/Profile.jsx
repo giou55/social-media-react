@@ -36,7 +36,7 @@ export default function Profile() {
 								src={
 									user.coverPicture
 										? PF + user.coverPicture
-										: PF + "/person/noCover.png"
+										: PF + "/users/noCover.png"
 								}
 								alt=""
 								className="profileCoverImg"
@@ -45,7 +45,7 @@ export default function Profile() {
 								src={
 									user.profilePicture
 										? PF + user.profilePicture
-										: PF + "/person/noAvatar.png"
+										: PF + "/users/noAvatar.png"
 								}
 								alt=""
 								className="profileUserImg"

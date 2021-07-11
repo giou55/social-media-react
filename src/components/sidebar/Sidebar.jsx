@@ -8,7 +8,6 @@ import { HelpOutline } from "@material-ui/icons";
 import { WorkOutline } from "@material-ui/icons";
 import { Event } from "@material-ui/icons";
 import { School } from "@material-ui/icons";
-// import { Users } from "../../dummyData";
 import User from "../user/User";
 import { useState, useEffect } from "react";
 import axios from "axios";

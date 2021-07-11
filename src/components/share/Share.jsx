@@ -25,6 +25,13 @@ export default function Share() {
 		}
 	};
 
+	const inputFileHandler = (e) => {
+		setIsDisabled(false);
+		setFile(null);
+		setFile(e.target.files[0]);
+	}
+
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		const newpost = {
@@ -38,7 +45,7 @@ export default function Share() {
 			data.append("file", file);
 			newpost.img = fileName;
 			try {
-				await axios.post("/upload", data);
+				await axios.post("/upload/posts", data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -60,13 +67,13 @@ export default function Share() {
 						src={
 							user.profilePicture
 								? PF + user.profilePicture
-								: PF + "/person/noAvatar.png"
+								: PF + "/users/noAvatar.png"
 						}
 						alt=""
 					/>
 					<input
 						placeholder={
-							"What's in your mind " + user.username + "?"
+							"What's in your mind " + user.firstname + "?"
 						}
 						className="shareInput"
 						ref={desc}
@@ -106,7 +113,7 @@ export default function Share() {
 								type="file"
 								id="file"
 								accept=".png,.jpeg,.jpg"
-								onChange={(e) => setFile(e.target.files[0])}
+								onChange={(e) => inputFileHandler(e)}
 							/>
 						</label>
 						<div className="shareOption">

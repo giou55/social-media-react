@@ -74,7 +74,7 @@ export default function Post({ p }) {
 										src={
 											user.profilePicture
 												? PF + user.profilePicture
-												: PF + "/person/noAvatar.png"
+												: PF + "/users/noAvatar.png"
 										}
 										alt=""
 									/>
@@ -116,7 +116,7 @@ export default function Post({ p }) {
 							<span className="postText">{post?.desc}</span>
 							<img
 								className="postImg"
-								src={post.img ? PF + "/" + post.img : ""}
+								src={post.img ? PF + "/posts/" + post.img : ""}
 								alt=""
 							/>
 						</div>

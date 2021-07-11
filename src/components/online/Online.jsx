@@ -7,7 +7,7 @@ export default function Online({user}) {
 		<li className="rightbarFriend">
 			<div className="rightbarProfileImgContainer">
 				<img
-					src={PF + "/" + user.profilePicture}
+					src={PF + "/users/" + user.profilePicture}
 					alt=""
 					className="rightbarProfileImg"
 				/>

@@ -10,7 +10,7 @@ export default function User({user}) {
 				src={
 					user.profilePicture
 						? PF + user.profilePicture
-						: PF + "/person/noAvatar.png"
+						: PF + "/users/noAvatar.png"
 				}
 				alt=""
 			/>
