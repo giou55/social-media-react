@@ -4,7 +4,8 @@ import { useHistory, Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Register() {
-	const username = useRef();
+	const firstname = useRef();
+	const lastname = useRef();
 	const email = useRef();
 	const password = useRef();
 	const passwordAgain = useRef();
@@ -16,7 +17,8 @@ export default function Register() {
 			password.current.setCustomValidity("Passwords don't match!");
 		} else {
 			const user = {
-				username: username.current.value,
+				firstname: firstname.current.value,
+				lastname: lastname.current.value,
 				email: email.current.value,
 				password: password.current.value,
 			};
@@ -42,13 +44,23 @@ export default function Register() {
 				<div className="registerRight">
 					<form className="registerBox" onSubmit={handleClick}>
 						<label htmlFor="username">
-							<b>Username</b>
+							<b>First Name</b>
 						</label>
 						<input
-							name="username"
-							id="username"
+							name="firstname"
+							id="firstname"
 							required
-							ref={username}
+							ref={firstname}
+							className="registerInput"
+						/>
+						<label htmlFor="username">
+							<b>Last Name</b>
+						</label>
+						<input
+							name="lastname"
+							id="lastname"
+							required
+							ref={lastname}
 							className="registerInput"
 						/>
 						<label htmlFor="email">

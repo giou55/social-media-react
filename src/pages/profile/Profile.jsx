@@ -10,15 +10,19 @@ import { useParams } from "react-router";
 export default function Profile() {
 	const [user, setUser] = useState({});
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const username = useParams().username;
+	const fullname = useParams().fullname;
+	const firstname = fullname.split(".")[0];
+	const lastname = fullname.split(".")[1];
 
 	useEffect(() => {
 		const fetchUserData = async () => {
-			const res = await axios.get(`/users?username=${username}`);
+			const res = await axios.get(
+				`/users?firstname=${firstname}&lastname=${lastname}`
+			);
 			setUser(res.data);
 		};
 		fetchUserData();
-	}, [username]);
+	}, [firstname, lastname]);
 
 	return (
 		<>
@@ -48,15 +52,17 @@ export default function Profile() {
 							/>
 						</div>
 						<div className="profileInfo">
-							<h4 className="profileInfoName">{user.username}</h4>
+							<h4 className="profileInfoName">
+								{user.firstname} {user.lastname}
+							</h4>
 							<span className="profileInfoDesc">
-								{user.desc ? user.desc : "Hello World!"}
+								{user.desc ? user.desc : "Hello my friends!"}
 							</span>
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						<Feed username={username} />
-						{user.username && <ProfileRightbar user={user} />}
+						<Feed userId={user._id} />
+						{user.firstname && <ProfileRightbar user={user} />}
 					</div>
 				</div>
 			</div>

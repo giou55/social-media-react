@@ -14,7 +14,9 @@ export default function User({user}) {
 				}
 				alt=""
 			/>
-			<span className="sidebarUserName">{user.username}</span>
+			<span className="sidebarUserName">
+				{user.firstname} {user.lastname}
+			</span>
 		</li>
 	);
 }

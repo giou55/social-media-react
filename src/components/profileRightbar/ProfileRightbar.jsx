@@ -49,7 +49,7 @@ export default function ProfileRightbar({ user }) {
 	return (
 		<div className="rightbar">
 			<div className="rightbarWrapper">
-				{user.username !== currentUser.username && (
+				{user.email !== currentUser.email && (
 					<button
 						className="rightbarFollowButton"
 						onClick={handleClick}
@@ -85,7 +85,12 @@ export default function ProfileRightbar({ user }) {
 					{friends.map((friend) => (
 						<Link
 							key={friend._id}
-							to={"/profile/" + friend.username}
+							to={
+								"/profile/" +
+								friend.firstname +
+								"." +
+								friend.lastname
+							}
 							style={{ textDecoration: "none" }}
 						>
 							<div className="rightbarFollowing">
@@ -99,7 +104,7 @@ export default function ProfileRightbar({ user }) {
 									className="rightbarFollowingImg"
 								/>
 								<span className="rightbarFollowingName">
-									{friend.username}
+									{friend.firstname} {friend.lastname}
 								</span>
 							</div>
 						</Link>

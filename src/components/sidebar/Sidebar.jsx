@@ -72,7 +72,7 @@ export default function Sidebar() {
 					{users.map((u) => (
 						<Link
 							key={u._id}
-							to={"/profile/" + u.username}
+							to={"/profile/" + u.firstname + "." + u.lastname}
 							style={{ textDecoration: "none" }}
 						>
 							<User key={u.id} user={u} />

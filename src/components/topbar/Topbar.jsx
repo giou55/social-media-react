@@ -78,7 +78,7 @@ export default function Topbar() {
 						{isDisplayedActions && (
 							<div className="topbarProfileActions">
 								<Link
-									to={`/profile/${user.username}`}
+									to={`/profile/${user.firstname}.${user.lastname}`}
 									style={{ textDecoration: "none" }}
 								>
 									<div>View profile</div>
@@ -86,12 +86,11 @@ export default function Topbar() {
 								<div onClick={showEditProfile}>
 									Edit profile
 								</div>
+								<div onClick={logout}>Logout</div>
 							</div>
 						)}
 					</div>
-					<div className="topbarLogout" onClick={logout}>
-						Logout
-					</div>
+					<div>{user.firstname}</div>
 				</div>
 			</div>
 			{isDisplayedEditProfile && (
