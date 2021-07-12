@@ -24,11 +24,25 @@ export default function Post({ p }) {
 	}, [currentUser._id, post.likes]);
 
 	useEffect(() => {
+		const cancelToken = axios.CancelToken;
+		const source = cancelToken.source();
 		const fetchUser = async () => {
-			const res = await axios.get(`/users?userId=${post.userId}`);
-			setUser(res.data);
+			try {
+				const res = await axios.get(`/users?userId=${post.userId}`, {
+					cancelToken: source.token,
+				});
+				setUser(res.data);
+			} catch (err) {
+				if (axios.isCancel(err)) {
+					return "request cancelled";
+				}
+				return err;
+			}
 		};
 		fetchUser();
+		return () => {
+			source.cancel("request cancelled");
+		};
 	}, [post.userId]);
 
 	const likeHandler = () => {
@@ -68,7 +82,9 @@ export default function Post({ p }) {
 					<div className="postWrapper">
 						<div className="postTop">
 							<div className="postTopLeft">
-								<Link to={`/profile/${user.username}`}>
+								<Link
+									to={`/profile/${user.firstname}.${user.lastname}`}
+								>
 									<img
 										className="postProfileImg"
 										src={
@@ -87,7 +103,7 @@ export default function Post({ p }) {
 								</span>
 							</div>
 							<div className="postTopRight">
-								{user.username === currentUser.username && (
+								{user._id === currentUser._id && (
 									<>
 										<MoreVert
 											fontSize="large"
