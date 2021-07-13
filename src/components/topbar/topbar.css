@@ -87,13 +87,24 @@
 	font-size: 12px;
 }
 
-.topbarProfilePicture {
+.topbarProfile {
 	position: relative;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+}
+
+.topbarProfileImage {
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 .topbarProfileActions {
 	position: absolute;
-	right: 10px;
+	top: 36px;
 	padding: 14px;
 	width: 120px;
 	background-color: white;
@@ -108,12 +119,3 @@
 	font-size: 15px;
 	font-weight: bold;
 }
-
-.topbarImg {
-	width: 32px;
-	height: 32px;
-	border-radius: 50%;
-	object-fit: cover;
-	cursor: pointer;
-}
-

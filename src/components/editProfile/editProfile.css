@@ -1,4 +1,4 @@
-.editPost {
+.editProfile {
 	position: fixed;
 	z-index: 1000;
 	left: 0;
@@ -11,7 +11,7 @@
 	justify-content: center;
 }
 
-.editPostWrapper {
+.editProfileWrapper {
 	padding: 20px;
 	min-width: 400px;
 	max-width: 600px;
@@ -25,25 +25,47 @@
 	border-radius: 10px;
 }
 
-.editPostHeader {
+.editProfileHeader {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin-bottom: 15px;
 }
 
-.closeEditPost {
+.closeEditProfile {
 	font-weight: bold;
 	cursor: pointer;
 }
 
-.editPostInput {
-	padding: 10px;
-	margin: 15px 0;
-	font-size: 16px;
-	user-select: text;
+.editProfileUserImg {
+	max-width: 30%;
 }
 
-.editPostButton {
+.editProfileCoverImg {
+	max-width: 100%;
+}
+
+.editProfileInput {
+	padding: 10px;
+	margin-bottom: 15px;
+	font-size: 16px;
+	user-select: text;
+	border: 1px solid #666;
+}
+
+.editProfileFieldWrapper {
+	margin-bottom: 15px;
+}
+
+.editProfileHeader {
+	margin-bottom: 6px;
+}
+
+.editProfileRadio {
+	margin: 0 10px;
+}
+
+.editProfileButton {
 	border: none;
 	padding: 7px;
 	border-radius: 5px;

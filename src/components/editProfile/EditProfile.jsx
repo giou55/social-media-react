@@ -8,50 +8,167 @@ export default function EditProfile({
 	setEditProfile,
 	updateProfile,
 }) {
-	const editPost = useRef();
-	const postInput = useRef();
+	const editProfile = useRef();
+	const profileDesc = useRef();
+	const profileCity = useRef();
+	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 	const closeEditProfile = () => {
 		setEditProfile(false);
+		console.log(profile);
 	};
 
-	const clickHandler = async () => {
+	const submitHandler = async (e) => {
+		e.preventDefault();
 		const newprofile = {
 			...profile,
-			username: postInput.current.innerText,
+			desc: profileDesc.current.innerText,
+			city: profileCity.current.innerText,
 		};
 		try {
 			await axios.put("/users/" + profile._id, newprofile);
 			updateProfile(newprofile);
 			setEditProfile(false);
+			window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}
 	};
 
+	// const clickHandler = async () => {
+	// 	const newprofile = {
+	// 		...profile,
+	// 		desc: profileDesc.current.innerText,
+	// 	};
+	// 	try {
+	// 		await axios.put("/users/" + profile._id, newprofile);
+	// 		updateProfile(newprofile);
+	// 		setEditProfile(false);
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
+
 	return (
-		<div className="editPost" ref={editPost}>
-			<div className="editPostWrapper">
-				<div className="editPostHeader">
+		<div className="editProfile" ref={editProfile}>
+			<div className="editProfileWrapper">
+				<div className="editProfileHeader">
 					<h3>Edit Profile</h3>
-					<div className="closeEditPost" onClick={closeEditProfile}>
+					<div
+						className="closeEditProfile"
+						onClick={closeEditProfile}
+					>
 						<Cancel />
 					</div>
 				</div>
 
+				<div>
+					<img
+						src={
+							profile.profilePicture
+								? PF + profile.profilePicture
+								: PF + "/users/noAvatar.png"
+						}
+						alt=""
+						className="editProfileUserImg"
+					/>
+				</div>
+
+				<div>
+					<img
+						src={
+							profile.coverPicture
+								? PF + profile.coverPicture
+								: PF + "/users/noCover.png"
+						}
+						alt=""
+						className="editProfileCoverImg"
+					/>
+				</div>
+
+				<div className="editProfileHeader">Description</div>
 				<div
-					className="editPostInput"
+					className="editProfileInput"
 					role="textbox"
 					contentEditable="true"
 					suppressContentEditableWarning="true"
-					ref={postInput}
+					ref={profileDesc}
 				>
-					{profile.username}
+					{profile.desc}
 				</div>
 
-				<button className="editPostButton" onClick={clickHandler}>
+				<div className="editProfileHeader">City</div>
+				<div
+					className="editProfileInput"
+					role="textbox"
+					contentEditable="true"
+					suppressContentEditableWarning="true"
+					ref={profileCity}
+				>
+					{profile.city}
+				</div>
+
+				<form onSubmit={submitHandler}>
+					<div className="editProfileFieldWrapper">
+						<div className="editProfileHeader">Sex</div>
+						<input
+							className="editProfileRadio"
+							type="radio"
+							id="male"
+							name="sex"
+						/>
+						<label htmlFor="male">Male</label>
+						<input
+							className="editProfileRadio"
+							type="radio"
+							id="female"
+							name="sex"
+						/>
+						<label htmlFor="female">Female</label>
+					</div>
+
+					<div className="editProfileFieldWrapper">
+						<div className="editProfileHeader">Birthday</div>
+						<input
+							type="date"
+							id="birthday"
+							name="birthday"
+						></input>
+					</div>
+
+					<div className="editProfileFieldWrapper">
+						<div className="editProfileHeader">Relationship</div>
+						<input
+							className="editProfileRadio"
+							type="radio"
+							id="single"
+							name="relationship"
+						/>
+						<label htmlFor="single">Single</label>
+						<input
+							className="editProfileRadio"
+							type="radio"
+							id="married"
+							name="relationship"
+						/>
+						<label htmlFor="married">Married</label>
+						<input
+							className="editProfileRadio"
+							type="radio"
+							id="complicated"
+							name="relationship"
+						/>
+						<label htmlFor="complicated">Complicated</label>
+					</div>
+
+					<button className="editProfileButton" type="submit">
+						Save
+					</button>
+				</form>
+
+				{/* <button className="editProfileButton" onClick={clickHandler}>
 					Save profile
-				</button>
+				</button> */}
 			</div>
 		</div>
 	);

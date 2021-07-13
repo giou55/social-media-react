@@ -62,10 +62,7 @@ export default function Topbar() {
 							<span className="topbarIconBadge">1</span>
 						</div>
 					</div>
-					<div
-						className="topbarProfilePicture"
-						onClick={toggleActions}
-					>
+					<div className="topbarProfile" onClick={toggleActions}>
 						<img
 							src={
 								user.profilePicture
@@ -73,8 +70,10 @@ export default function Topbar() {
 									: PF + "/users/noAvatar.png"
 							}
 							alt=""
-							className="topbarImg"
+							className="topbarProfileImage"
 						/>
+						<div>{user.firstname}</div>
+
 						{isDisplayedActions && (
 							<div className="topbarProfileActions">
 								<Link
@@ -90,7 +89,6 @@ export default function Topbar() {
 							</div>
 						)}
 					</div>
-					<div>{user.firstname}</div>
 				</div>
 			</div>
 			{isDisplayedEditProfile && (

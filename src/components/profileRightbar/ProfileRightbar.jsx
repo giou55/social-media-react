@@ -67,15 +67,23 @@ export default function ProfileRightbar({ user }) {
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
-						<span className="rightbarInfoKey">From:</span>
+						<span className="rightbarInfoKey">Sex:</span>
 						<span className="rightbarInfoValue">
-							{user.from ? user.from : "Athens"}
+							{user.from ? user.from : "Undefined"}
+						</span>
+					</div>
+					<div className="rightbarInfoItem">
+						<span className="rightbarInfoKey">Birthday:</span>
+						<span className="rightbarInfoValue">
+							{user.birthday ? user.birthday : "Undefined"}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Relationship:</span>
 						<span className="rightbarInfoValue">
-							{user.relationship ? user.relationship : "Single"}
+							{user.relationship
+								? user.relationship
+								: "Undefined"}
 							{/* {user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : "-"} */}
 						</span>
 					</div>

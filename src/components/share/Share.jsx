@@ -14,23 +14,28 @@ export default function Share() {
 	const { user } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const desc = useRef();
+	const fileInput = useRef();
 	const [file, setFile] = useState(null);
 	const [isDisabled, setIsDisabled] = useState(true);
 
 	const setButton = () => {
-		if (desc.current.value !== "") {
+		if (desc.current.value !== "" || fileInput.current.files[0] !== undefined) {
 			setIsDisabled(false);
 		} else {
 			setIsDisabled(true);
 		}
+		console.log(fileInput.current.files[0]);
 	};
 
-	const inputFileHandler = (e) => {
-		setIsDisabled(false);
-		setFile(null);
+	const changeInputHandler = (e) => {
 		setFile(e.target.files[0]);
-	}
+		setButton();
+		e.target.value = null;
+	};
 
+	const cancelFileHandler = () => {
+		setFile(null);
+	};
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -93,7 +98,7 @@ export default function Share() {
 						<Cancel
 							className="shareCancelImg"
 							fontSize="large"
-							onClick={() => setFile(null)}
+							onClick={cancelFileHandler}
 						/>
 					</div>
 				)}
@@ -113,7 +118,8 @@ export default function Share() {
 								type="file"
 								id="file"
 								accept=".png,.jpeg,.jpg"
-								onChange={(e) => inputFileHandler(e)}
+								onChange={(e) => changeInputHandler(e)}
+								ref={fileInput}
 							/>
 						</label>
 						<div className="shareOption">
