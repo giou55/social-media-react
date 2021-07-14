@@ -19,7 +19,10 @@ export default function Share() {
 	const [isDisabled, setIsDisabled] = useState(true);
 
 	const setButton = () => {
-		if (desc.current.value !== "" || fileInput.current.files[0] !== undefined) {
+		if (
+			desc.current.value !== "" ||
+			fileInput.current.files[0] !== undefined
+		) {
 			setIsDisabled(false);
 		} else {
 			setIsDisabled(true);

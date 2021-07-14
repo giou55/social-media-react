@@ -28,6 +28,7 @@ export default function Feed({ userId }) {
 		<div className="feed">
 			<div className="feedWrapper">
 				{(!userId || userId === user._id) && <Share />}
+				{posts && posts.length > 0 ? "" : "No Posts"}
 				{posts.map((p) => (
 					<Post key={p._id} p={p} />
 				))}

@@ -41,6 +41,34 @@
 	margin: 15px 0;
 	font-size: 16px;
 	user-select: text;
+	border: 1px solid #666;
+	border-radius: 5px;
+}
+
+.editPostImgContainer {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.editPostImg img {
+	width: 100%;
+}
+
+.editPostImgForm {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 7px 12px;
+	background-color: black;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.editPostImgLabel {
+	cursor: pointer;
 }
 
 .editPostButton {
@@ -48,6 +76,7 @@
 	padding: 7px;
 	border-radius: 5px;
 	background-color: #1877f2;
+	font-size: 14px;
 	font-weight: 500;
 	cursor: pointer;
 	color: white;
