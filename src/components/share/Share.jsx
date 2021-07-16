@@ -27,7 +27,6 @@ export default function Share() {
 		} else {
 			setIsDisabled(true);
 		}
-		console.log(fileInput.current.files[0]);
 	};
 
 	const changeInputHandler = (e) => {

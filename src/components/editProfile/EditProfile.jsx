@@ -1,6 +1,6 @@
 import "./editProfile.css";
 import { Cancel } from "@material-ui/icons";
-import { useRef, useContext } from "react";
+import { useRef, useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../context/AuthContext";
 
@@ -14,19 +14,52 @@ export default function EditProfile({
 	const profileCity = useRef();
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const { user } = useContext(AuthContext);
+	const [newCoverImg, setNewCoverImg] = useState("");
 
 	const closeEditProfile = () => {
 		setEditProfile(false);
-		console.log(user);
 	};
 
-	const submitHandler = async (e) => {
-		e.preventDefault();
+	const changeCoverImg = (e) => {
+		setNewCoverImg(e.target.files[0]);
+		e.target.value = null;
+	};
+
+	// const submitHandler = async (e) => {
+	// 	e.preventDefault();
+	// 	const newprofile = {
+	// 		...profile,
+	// 		desc: profileDesc.current.innerText,
+	// 		city: profileCity.current.innerText,
+	// 	};
+	// 	try {
+	// 		await axios.put("/users/" + profile._id, newprofile);
+	// 		updateProfile(newprofile);
+	// 		setEditProfile(false);
+	// 		window.location.reload();
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
+
+	const saveProfile = async () => {
 		const newprofile = {
 			...profile,
 			desc: profileDesc.current.innerText,
 			city: profileCity.current.innerText,
 		};
+		if (newCoverImg) {
+			const data = new FormData();
+			const fileName = Date.now() + newCoverImg.name;
+			data.append("name", fileName);
+			data.append("file", newCoverImg);
+			newprofile.coverPicture = fileName;
+			try {
+				await axios.post("/upload/users", data);
+			} catch (err) {
+				console.log(err);
+			}
+		}
 		try {
 			await axios.put("/users/" + profile._id, newprofile);
 			updateProfile(newprofile);
@@ -36,20 +69,6 @@ export default function EditProfile({
 			console.log(err);
 		}
 	};
-
-	// const clickHandler = async () => {
-	// 	const newprofile = {
-	// 		...profile,
-	// 		desc: profileDesc.current.innerText,
-	// 	};
-	// 	try {
-	// 		await axios.put("/users/" + profile._id, newprofile);
-	// 		updateProfile(newprofile);
-	// 		setEditProfile(false);
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// };
 
 	return (
 		<div className="editProfile" ref={editProfile}>
@@ -64,28 +83,48 @@ export default function EditProfile({
 					</div>
 				</div>
 
-				<div>
-					<img
-						src={
-							profile.profilePicture
-								? PF + profile.profilePicture
-								: PF + "/users/noAvatar.png"
-						}
-						alt=""
-						className="editProfileUserImg"
-					/>
-				</div>
-
-				<div>
-					<img
-						src={
-							profile.coverPicture
-								? PF + profile.coverPicture
-								: PF + "/users/noCover.png"
-						}
-						alt=""
-						className="editProfileCoverImg"
-					/>
+				<div className="editProfileImgContainer">
+					{!newCoverImg && (
+						<div className="editProfileImg">
+							<img
+								src={
+									profile.coverPicture
+										? PF + "/users/" + profile.coverPicture
+										: PF + "/users/noCover.png"
+								}
+								alt=""
+							/>
+						</div>
+					)}
+					{newCoverImg && (
+						<div className="editProfileImg">
+							<img
+								src={URL.createObjectURL(newCoverImg)}
+								alt=""
+							/>
+						</div>
+					)}
+					<div className="editProfileImgForm">
+						<form>
+							<div>
+								<label
+									htmlFor="coverFile"
+									className="editProfileImgLabel"
+								>
+									<span className="editProfileImgText">
+										Change photo
+									</span>
+									<input
+										style={{ display: "none" }}
+										type="file"
+										id="coverFile"
+										accept=".png,.jpeg,.jpg"
+										onChange={(e) => changeCoverImg(e)}
+									/>
+								</label>
+							</div>
+						</form>
+					</div>
 				</div>
 
 				<div className="editProfileHeader">Description</div>
@@ -110,7 +149,7 @@ export default function EditProfile({
 					{profile.city}
 				</div>
 
-				<form onSubmit={submitHandler}>
+				<form>
 					<div className="editProfileFieldWrapper">
 						<div className="editProfileHeader">Sex</div>
 						<input
@@ -162,15 +201,11 @@ export default function EditProfile({
 						/>
 						<label htmlFor="complicated">Complicated</label>
 					</div>
-
-					<button className="editProfileButton" type="submit">
-						Save
-					</button>
 				</form>
 
-				{/* <button className="editProfileButton" onClick={clickHandler}>
-					Save profile
-				</button> */}
+				<button className="editProfileButton" onClick={saveProfile}>
+					Save
+				</button>
 			</div>
 		</div>
 	);

@@ -37,20 +37,41 @@
 	cursor: pointer;
 }
 
-.editProfileUserImg {
-	max-width: 30%;
-}
-
-.editProfileCoverImg {
-	max-width: 100%;
-}
-
 .editProfileInput {
 	padding: 10px;
 	margin-bottom: 15px;
 	font-size: 16px;
 	user-select: text;
 	border: 1px solid #666;
+	border-radius: 5px;
+}
+
+.editProfileImgContainer {
+	position: relative;
+	margin-bottom: 10px;
+}
+
+.editProfileImg img {
+	max-height: 400px;
+	max-width: 100%;
+	width: auto;
+}
+
+.editProfileImgForm {
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 7px 12px;
+	background-color: black;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 500;
+}
+
+.editProfileImgLabel {
+	cursor: pointer;
 }
 
 .editProfileFieldWrapper {
@@ -70,6 +91,7 @@
 	padding: 7px;
 	border-radius: 5px;
 	background-color: #1877f2;
+	font-size: 14px;
 	font-weight: 500;
 	cursor: pointer;
 	color: white;

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "../editProfile/EditProfile";
+import axios from "axios";
 
 export default function Topbar() {
 	const { user } = useContext(AuthContext);
@@ -19,6 +20,15 @@ export default function Topbar() {
 	const showEditProfile = () => {
 		setIsDisplayedActions(false);
 		setIsDisplayedEditProfile(true);
+	};
+
+	const deleteAcount = (userId) => {
+		try {
+			axios.delete("/users/" + userId);
+			logout();
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	const logout = () => {
@@ -85,6 +95,7 @@ export default function Topbar() {
 								<div onClick={showEditProfile}>
 									Edit profile
 								</div>
+								<div onClick={deleteAcount}>Delete account</div>
 								<div onClick={logout}>Logout</div>
 							</div>
 						)}

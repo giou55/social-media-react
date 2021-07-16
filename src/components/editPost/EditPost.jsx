@@ -7,7 +7,6 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const editPost = useRef();
 	const postInput = useRef();
-	const imgInput = useRef();
 	const [newImgFile, setNewImgFile] = useState("");
 
 	const closeEditPost = () => {
@@ -80,8 +79,8 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 						</div>
 					)}
 					<div className="editPostImgForm">
-						<form className="">
-							<div className="">
+						<form>
+							<div>
 								<label
 									htmlFor="imgFile"
 									className="editPostImgLabel"
@@ -95,7 +94,6 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 										id="imgFile"
 										accept=".png,.jpeg,.jpg"
 										onChange={(e) => changePhotoHandler(e)}
-										ref={imgInput}
 									/>
 								</label>
 							</div>
