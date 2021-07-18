@@ -9,7 +9,7 @@ export default function Login() {
 	const email = useRef();
 	const password = useRef();
 
-	const { isFetching, dispatch } = useContext(AuthContext);
+	const { isFetching, dispatch, error } = useContext(AuthContext);
 
 	const handleClick = (e) => {
 		e.preventDefault();
@@ -54,6 +54,7 @@ export default function Login() {
 							className="loginInput"
 							ref={password}
 						/>
+						<div className="loginMessage">{error}</div>
 						<button className="loginButton" type="submit">
 							{isFetching ? (
 								<CircularProgress color="primary" size="20px" />

@@ -32,11 +32,17 @@
 	font-size: 24px;
 }
 
+.loginMessage {
+	color: red;
+	font-size: 13px;
+	align-self: flex-start;
+}
+
 .loginBox {
 	padding: 20px;
 	background-color: white;
 	border-radius: 10px;
-    text-align: left;
+	text-align: left;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -44,7 +50,7 @@
 }
 
 .loginBox label {
-    width: 100%;
+	width: 100%;
 }
 
 .loginInput {
@@ -86,10 +92,10 @@
 
 .loginRegisterButton {
 	height: 50px;
-    width: 100%;
+	width: 100%;
 	border-radius: 10px;
 	margin: 10px auto;
-    padding: 5px 20px;
+	padding: 5px 20px;
 	border: none;
 	background-color: #42b72a;
 	color: white;
