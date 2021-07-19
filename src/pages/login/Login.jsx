@@ -1,22 +1,30 @@
 import { useContext, useRef } from "react";
 import "./login.css";
-import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
 	const email = useRef();
 	const password = useRef();
 
-	const { isFetching, dispatch, error } = useContext(AuthContext);
+	// const { isFetching, dispatch, error } = useContext(AuthContext);
 
-	const handleClick = (e) => {
+	const login = async (e) => {
 		e.preventDefault();
-		loginCall(
-			{ email: email.current.value, password: password.current.value },
-			dispatch
-		);
+		const userCredentials = {
+			email: email.current.value,
+			password: password.current.value,
+		};
+		// dispatch({ type: "LOGIN_START" });
+		try {
+			const res = await axios.post("/auth/login", userCredentials);
+			console.log(res);
+			// dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
+		} catch (err) {
+			// dispatch({ type: "LOGIN_FAILURE", payload: err });
+		}
 	};
 
 	return (
@@ -29,7 +37,7 @@ export default function Login() {
 						Friendbook.
 					</span>
 				</div>
-				<div className="loginRight" onSubmit={handleClick}>
+				<div className="loginRight" onSubmit={login}>
 					<form className="loginBox">
 						<label htmlFor="email">
 							<b>Email</b>
@@ -54,13 +62,14 @@ export default function Login() {
 							className="loginInput"
 							ref={password}
 						/>
-						<div className="loginMessage">{error}</div>
+						<div className="loginMessage">Error</div>
 						<button className="loginButton" type="submit">
-							{isFetching ? (
+							{/* {isFetching ? (
 								<CircularProgress color="primary" size="20px" />
 							) : (
 								"Log in"
-							)}
+							)} */}
+							Log in
 						</button>
 						<span className="loginForgot">Forgot Password?</span>
 						<Link to="/register">

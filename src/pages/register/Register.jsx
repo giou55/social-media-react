@@ -11,7 +11,7 @@ export default function Register() {
 	const passwordAgain = useRef();
 	const history = useHistory();
 
-	const handleClick = async (e) => {
+	const register = async (e) => {
 		e.preventDefault();
 		if (passwordAgain.current.value !== password.current.value) {
 			password.current.setCustomValidity("Passwords don't match!");
@@ -42,7 +42,7 @@ export default function Register() {
 					</span>
 				</div>
 				<div className="registerRight">
-					<form className="registerBox" onSubmit={handleClick}>
+					<form className="registerBox" onSubmit={register}>
 						<label htmlFor="username">
 							<b>First Name</b>
 						</label>
@@ -101,7 +101,7 @@ export default function Register() {
 							Sign up
 						</button>
 						<Link to="/login">
-							<button className="registerRegisterButton">
+							<button className="registerLoginButton">
 								Log into Account
 							</button>
 						</Link>
