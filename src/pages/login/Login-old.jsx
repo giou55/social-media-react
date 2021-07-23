@@ -1,13 +1,15 @@
-import { useContext, useState, useRef } from "react";
+import { useContext, useRef } from "react";
 import "./login.css";
 import { AuthContext } from "../../context/AuthContext";
+import { CircularProgress } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 export default function Login() {
 	const email = useRef();
 	const password = useRef();
-	const [errorMessage, setErrorMessage] = useState("");
+
+	// const { isFetching, dispatch, error } = useContext(AuthContext);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -15,16 +17,14 @@ export default function Login() {
 			email: email.current.value,
 			password: password.current.value,
 		};
+		// dispatch({ type: "LOGIN_START" });
 		try {
 			const res = await axios.post("/auth/login", userCredentials);
-			if (res.data.message !== "") {
-				setErrorMessage(res.data.message);
-			} else {
-				setErrorMessage("");
-				console.log(res);
-			}
+			console.log(res);
+			// dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
 		} catch (err) {
 			console.log(err);
+			// dispatch({ type: "LOGIN_FAILURE", payload: err });
 		}
 	};
 
@@ -63,8 +63,13 @@ export default function Login() {
 							className="loginInput"
 							ref={password}
 						/>
-						<div className="loginMessage">{errorMessage}</div>
+						<div className="loginMessage">{Error}</div>
 						<button className="loginButton" type="submit">
+							{/* {isFetching ? (
+								<CircularProgress color="primary" size="20px" />
+							) : (
+								"Log in"
+							)} */}
 							Log in
 						</button>
 						<span className="loginForgot">Forgot Password?</span>
