@@ -9,24 +9,39 @@ import { useParams } from "react-router";
 
 export default function Profile() {
 	const [user, setUser] = useState({});
+	const [profile, setProfile] = useState({});
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const fullname = useParams().fullname;
+
 	const firstname = fullname.split(".")[0];
 	const lastname = fullname.split(".")[1];
+
+	const userFirstname = localStorage.getItem("firstname");
+	const userLastname = localStorage.getItem("lastname");
+
+	useEffect(() => {
+		const fetchProfileData = async () => {
+			const res = await axios.get(
+				`/users?firstname=${firstname}&lastname=${lastname}`
+			);
+			setProfile(res.data);
+		};
+		fetchProfileData();
+	}, [firstname, lastname]);
 
 	useEffect(() => {
 		const fetchUserData = async () => {
 			const res = await axios.get(
-				`/users?firstname=${firstname}&lastname=${lastname}`
+				`/users?firstname=${userFirstname}&lastname=${userLastname}`
 			);
 			setUser(res.data);
 		};
 		fetchUserData();
-	}, [firstname, lastname]);
+	}, [userFirstname, userLastname]);
 
 	return (
 		<>
-			<Topbar />
+			{user && <Topbar user={user} />}
 			<div className="profile">
 				<Sidebar />
 				<div className="profileRight">
@@ -34,8 +49,8 @@ export default function Profile() {
 						<div className="profileCover">
 							<img
 								src={
-									user.coverPicture
-										? PF + "/users/" + user.coverPicture
+									profile.coverPicture
+										? PF + "/users/" + profile.coverPicture
 										: PF + "/users/noCover.png"
 								}
 								alt=""
@@ -43,8 +58,8 @@ export default function Profile() {
 							/>
 							<img
 								src={
-									user.profilePicture
-										? PF + user.profilePicture
+									profile.profilePicture
+										? PF + profile.profilePicture
 										: PF + "/users/noAvatar.png"
 								}
 								alt=""
@@ -53,16 +68,20 @@ export default function Profile() {
 						</div>
 						<div className="profileInfo">
 							<h4 className="profileInfoName">
-								{user.firstname} {user.lastname}
+								{profile.firstname} {profile.lastname}
 							</h4>
 							<span className="profileInfoDesc">
-								{user.desc ? user.desc : "Hello my friends!"}
+								{profile.desc
+									? profile.desc
+									: "Hello my friends!"}
 							</span>
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						<Feed userId={user._id} />
-						{user.firstname && <ProfileRightbar user={user} />}
+						{profile && <Feed user={profile} />}
+						{/* {profile && (
+							<ProfileRightbar user={profile} />
+						)} */}
 					</div>
 				</div>
 			</div>

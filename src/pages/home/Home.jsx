@@ -4,22 +4,23 @@ import Feed from "../../components/feed/Feed";
 import HomeRightbar from "../../components/homeRightbar/HomeRightbar";
 import "./home.css";
 import axios from "axios";
-import { useState, useEffect, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState, useEffect} from "react";
 
 export default function Home() {
 	const [user, setUser] = useState({});
-	const authCtx = useContext(AuthContext);
+	
+	const firstname = localStorage.getItem('firstname');
+	const lastname = localStorage.getItem('lastname');
 
 	useEffect(() => {
 		const fetchUserData = async () => {
 			const res = await axios.get(
-				`/users?firstname=${authCtx.firstName}&lastname=${authCtx.lastName}`
+				`/users?firstname=${firstname}&lastname=${lastname}`
 			);
 			setUser(res.data);
 		};
 		fetchUserData();
-	}, [authCtx.firstName, authCtx.lastName]);
+	}, [firstname, lastname]);
 
 	return (
 		<>

@@ -3,35 +3,49 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext({
 	token: "",
 	isLoggedIn: false,
-	login: (token) => {},
+	login: (data) => {},
 	logout: () => {},
 	firstName: "",
 	lastName: "",
-	userId: ""
+	userId: "",
 });
 
 export const AuthContextProvider = ({ children }) => {
-	const [token, setToken] = useState(null);
+	const initialToken = localStorage.getItem("token");
+	const [token, setToken] = useState(initialToken);
+	const [firstname, setFirstname] = useState("");
+	const [lastname, setLastname] = useState("");
+	const [userId, setUserId] = useState("");
 
 	const userIsLoggedIn = !!token;
 
-	const loginHandler = (token) => {
-		setToken(token);
+	const loginHandler = (data) => {
+		localStorage.setItem("token", data.token);
+		localStorage.setItem("firstname", data.firstName);
+		localStorage.setItem("lastname", data.lastName);
+		localStorage.setItem("userId", data.userId);
+		setToken(data.token);
+		setFirstname(data.firstName);
+		setLastname(data.lastName);
+		setUserId(data.userId);
 	};
 
 	const logoutHandler = () => {
+		localStorage.clear();
 		setToken(null);
+		setFirstname("");
+		setLastname("");
+		setUserId("");
 	};
-
 
 	const contextValue = {
 		token: token,
 		isLoggedIn: userIsLoggedIn,
 		login: loginHandler,
 		logout: logoutHandler,
-		firstName: "",
-		lastName: "",
-		userId: "",
+		firstName: firstname,
+		lastName: lastname,
+		userId: userId,
 	};
 
 	return (

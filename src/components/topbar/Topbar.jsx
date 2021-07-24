@@ -7,13 +7,11 @@ import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
 export default function Topbar({ user }) {
-	// const { user } = useContext(AuthContext);
 	const [profile, setProfile] = useState(user);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const authCtx = useContext(AuthContext);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
-
-	console.log(user);
 
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);
@@ -27,15 +25,10 @@ export default function Topbar({ user }) {
 	const deleteAcount = (userId) => {
 		try {
 			axios.delete("/users/" + userId);
-			logout();
+			authCtx.logout();
 		} catch (err) {
 			console.log(err);
 		}
-	};
-
-	const logout = () => {
-		localStorage.removeItem("user");
-		window.location.reload();
 	};
 
 	return (
@@ -84,12 +77,12 @@ export default function Topbar({ user }) {
 							alt=""
 							className="topbarProfileImage"
 						/>
-						<div>{user.firstName}</div>
+						<div>{user.firstname}</div>
 
 						{isDisplayedActions && (
 							<div className="topbarProfileActions">
 								<Link
-									to={`/profile/${user.firstName}.${user.lastName}`}
+									to={`/profile/${user.firstname}.${user.lastname}`}
 									style={{ textDecoration: "none" }}
 								>
 									<div>View profile</div>
@@ -98,7 +91,7 @@ export default function Topbar({ user }) {
 									Edit profile
 								</div>
 								<div onClick={deleteAcount}>Delete account</div>
-								<div onClick={logout}>Logout</div>
+								<div onClick={authCtx.logout}>Logout</div>
 							</div>
 						)}
 					</div>

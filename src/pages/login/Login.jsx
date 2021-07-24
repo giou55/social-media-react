@@ -23,11 +23,7 @@ export default function Login() {
 				setErrorMessage(res.data.message);
 			} else {
 				setErrorMessage("");
-				console.log(res.data);
-				authCtx.login(res.data.token);
-				authCtx.firstName = res.data.firstName;
-				authCtx.lastName = res.data.lastName;
-				authCtx.userId = res.data.userId;
+				authCtx.login(res.data);
 			}
 		} catch (err) {
 			console.log(err);
