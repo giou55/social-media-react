@@ -13,22 +13,22 @@ import { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 
 function App() {
-	const { user } = useContext(AuthContext);
+	const { isLoggedIn } = useContext(AuthContext);
 
 	return (
 		<Router>
 			<Switch>
 				<Route exact path="/">
-					{user ? <Home /> : <Login />}
+					{isLoggedIn ? <Home /> : <Login />}
 				</Route>
 				<Route path="/login">
-					{user ? <Redirect to="/" /> : <Login />}
+					{isLoggedIn ? <Redirect to="/" /> : <Login />}
 				</Route>
 				<Route path="/register">
-					{user ? <Redirect to="/" /> : <Register />}
+					{isLoggedIn ? <Redirect to="/" /> : <Register />}
 				</Route>
 				<Route path="/profile/:fullname">
-					{user ? <Profile /> : <Redirect to="/login" />}
+					{isLoggedIn ? <Profile /> : <Redirect to="/login" />}
 				</Route>
 			</Switch>
 		</Router>

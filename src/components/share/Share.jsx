@@ -10,8 +10,8 @@ import { useContext, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
 
-export default function Share() {
-	const { user } = useContext(AuthContext);
+export default function Share({ user }) {
+	// const { user } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const desc = useRef();
 	const fileInput = useRef();

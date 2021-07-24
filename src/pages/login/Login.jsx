@@ -9,6 +9,8 @@ export default function Login() {
 	const password = useRef();
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const authCtx = useContext(AuthContext);
+
 	const submitHandler = async (e) => {
 		e.preventDefault();
 		const userCredentials = {
@@ -21,7 +23,11 @@ export default function Login() {
 				setErrorMessage(res.data.message);
 			} else {
 				setErrorMessage("");
-				console.log(res);
+				console.log(res.data);
+				authCtx.login(res.data.token);
+				authCtx.firstName = res.data.firstName;
+				authCtx.lastName = res.data.lastName;
+				authCtx.userId = res.data.userId;
 			}
 		} catch (err) {
 			console.log(err);

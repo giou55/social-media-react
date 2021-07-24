@@ -6,12 +6,14 @@ import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
-export default function Topbar() {
-	const { user } = useContext(AuthContext);
+export default function Topbar({ user }) {
+	// const { user } = useContext(AuthContext);
 	const [profile, setProfile] = useState(user);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
+
+	console.log(user);
 
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);
@@ -82,12 +84,12 @@ export default function Topbar() {
 							alt=""
 							className="topbarProfileImage"
 						/>
-						<div>{user.firstname}</div>
+						<div>{user.firstName}</div>
 
 						{isDisplayedActions && (
 							<div className="topbarProfileActions">
 								<Link
-									to={`/profile/${user.firstname}.${user.lastname}`}
+									to={`/profile/${user.firstName}.${user.lastName}`}
 									style={{ textDecoration: "none" }}
 								>
 									<div>View profile</div>

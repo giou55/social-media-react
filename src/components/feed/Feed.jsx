@@ -6,15 +6,15 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Feed({ userId }) {
+export default function Feed({ user }) {
 	const [posts, setPosts] = useState([]);
-	const { user } = useContext(AuthContext);
+	// const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = userId
-				? await axios.get("/posts/profile/" + userId)
-				: await axios.get("/posts/timeline/" + user._id);
+			const res = user
+				? await axios.get("/posts/profile/" + user.userId)
+				: await axios.get("/posts/timeline/" + user.userId);
 			setPosts(
 				res.data.sort((p1, p2) => {
 					return new Date(p2.createdAt) - new Date(p1.createdAt);
@@ -22,12 +22,12 @@ export default function Feed({ userId }) {
 			);
 		};
 		fetchPosts();
-	}, [userId, user._id]);
+	}, [user]);
 
 	return (
 		<div className="feed">
 			<div className="feedWrapper">
-				{(!userId || userId === user._id) && <Share />}
+				{user && <Share user={user} />}
 				{posts && posts.length > 0 ? "" : "No Posts"}
 				{posts.map((p) => (
 					<Post key={p._id} p={p} />
