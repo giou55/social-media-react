@@ -78,10 +78,8 @@ export default function Profile() {
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						{profile && <Feed user={profile} />}
-						{/* {profile && (
-							<ProfileRightbar user={profile} />
-						)} */}
+						<Feed user={profile} />
+						{user.followings && <ProfileRightbar profile={profile} user={user} />}
 					</div>
 				</div>
 			</div>

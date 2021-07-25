@@ -1,44 +1,42 @@
 import "./profilerightbar.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { Add, Remove } from "@material-ui/icons";
 
-export default function ProfileRightbar({ user }) {
+export default function ProfileRightbar({ profile, user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const { user: currentUser, dispatch } = useContext(AuthContext);
 	const [friends, setFriends] = useState([]);
 	const [followed, setFollowed] = useState(
-		currentUser.followings.includes(user?._id)
+		user.followings.includes(profile?._id)
 	);
 
-	useEffect(() => {
-		setFollowed(currentUser.followings.includes(user?._id));
-	}, [currentUser, user._id]);
+	console.log(user);
 
 	useEffect(() => {
 		const fetchUserFriends = async () => {
-			const friendList = user
-				? await axios.get(`/users/friends/${user._id}`)
-				: [];
-			setFriends(friendList.data);
+			try {
+				const friendList = await axios.get(
+					`/users/friends/${profile._id}`
+				);
+				setFriends(friendList.data);
+			} catch (err) {
+				console.log(err);
+			}
 		};
 		fetchUserFriends();
-	}, [user]);
+	}, [profile, user]);
 
 	const handleClick = async () => {
 		try {
 			if (followed) {
-				await axios.put("/users/" + user._id + "/unfollow", {
-					userId: currentUser._id,
+				await axios.put("/users/" + profile._id + "/unfollow", {
+					userId: user._id,
 				});
-				dispatch({ type: "UNFOLLOW", payload: user._id });
 			} else {
-				await axios.put("/users/" + user._id + "/follow", {
-					userId: currentUser._id,
+				await axios.put("/users/" + profile._id + "/follow", {
+					userId: user._id,
 				});
-				dispatch({ type: "FOLLOW", payload: user._id });
 			}
 			setFollowed(!followed);
 		} catch (err) {
@@ -49,7 +47,7 @@ export default function ProfileRightbar({ user }) {
 	return (
 		<div className="rightbar">
 			<div className="rightbarWrapper">
-				{user.email !== currentUser.email && (
+				{profile.email !== user.email && (
 					<button
 						className="rightbarFollowButton"
 						onClick={handleClick}
@@ -63,26 +61,26 @@ export default function ProfileRightbar({ user }) {
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">City:</span>
 						<span className="rightbarInfoValue">
-							{user.city ? user.city : "New York"}
+							{profile.city ? profile.city : "New York"}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Sex:</span>
 						<span className="rightbarInfoValue">
-							{user.from ? user.from : "Undefined"}
+							{profile.from ? profile.from : "Undefined"}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Birthday:</span>
 						<span className="rightbarInfoValue">
-							{user.birthday ? user.birthday : "Undefined"}
+							{profile.birthday ? profile.birthday : "Undefined"}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Relationship:</span>
 						<span className="rightbarInfoValue">
-							{user.relationship
-								? user.relationship
+							{profile.relationship
+								? profile.relationship
 								: "Undefined"}
 							{/* {user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : "-"} */}
 						</span>
