@@ -1,52 +1,46 @@
-import { createContext, useState, useReducer } from "react";
+import { createContext, useState, useReducer, useEffect } from "react";
 import AuthReducer from "./AuthReducer";
 
-export const AuthContext = createContext({
-	token: "",
+const INITIAL_STATE = {
+	user: JSON.parse(localStorage.getItem("user")) || null,
+	token: localStorage.getItem("token") || null,
 	isLoggedIn: false,
 	login: (data) => {},
 	logout: () => {},
-	firstName: "",
-	lastName: "",
-	userId: "",
-});
+};
+
+export const AuthContext = createContext(INITIAL_STATE);
 
 export const AuthContextProvider = ({ children }) => {
-	const initialToken = localStorage.getItem("token");
-	const [token, setToken] = useState(initialToken);
-	const [firstname, setFirstname] = useState("");
-	const [lastname, setLastname] = useState("");
-	const [userId, setUserId] = useState("");
+	const [state, dispatch] = useReducer(AuthReducer, INITIAL_STATE);
 
-	const userIsLoggedIn = !!token;
+	const [user, setUser] = useState(state.user);
+	const [token, setToken] = useState(state.token);
+	const [isLoggedIn, setIsLoggedIn] = useState(state.token);
+
+	useEffect(() => {
+		localStorage.setItem("user", JSON.stringify(state.user));
+		localStorage.setItem("token", state.token);
+	}, [state.user, state.token]);
 
 	const loginHandler = (data) => {
-		localStorage.setItem("token", data.token);
-		localStorage.setItem("firstname", data.firstName);
-		localStorage.setItem("lastname", data.lastName);
-		localStorage.setItem("userId", data.userId);
+		setUser(data.user);
 		setToken(data.token);
-		setFirstname(data.firstName);
-		setLastname(data.lastName);
-		setUserId(data.userId);
+		setIsLoggedIn(true);
 	};
 
 	const logoutHandler = () => {
 		localStorage.clear();
-		setToken(null);
-		setFirstname("");
-		setLastname("");
-		setUserId("");
+		setIsLoggedIn(false);
 	};
 
 	const contextValue = {
+		user: user,
 		token: token,
-		isLoggedIn: userIsLoggedIn,
+		isLoggedIn: isLoggedIn,
 		login: loginHandler,
 		logout: logoutHandler,
-		firstName: firstname,
-		lastName: lastname,
-		userId: userId,
+		dispatch,
 	};
 
 	return (

@@ -1,17 +1,18 @@
 import "./profilerightbar.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
+import { AuthContext } from "../../context/AuthContext";
 
-export default function ProfileRightbar({ profile, user }) {
+export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+	const { user, dispatch } = useContext(AuthContext);
 	const [friends, setFriends] = useState([]);
 	const [followed, setFollowed] = useState(
 		user.followings.includes(profile?._id)
 	);
-
-	console.log(user);
 
 	useEffect(() => {
 		const fetchUserFriends = async () => {
@@ -25,7 +26,7 @@ export default function ProfileRightbar({ profile, user }) {
 			}
 		};
 		fetchUserFriends();
-	}, [profile, user]);
+	}, [profile]);
 
 	const handleClick = async () => {
 		try {
@@ -33,10 +34,12 @@ export default function ProfileRightbar({ profile, user }) {
 				await axios.put("/users/" + profile._id + "/unfollow", {
 					userId: user._id,
 				});
+				dispatch({ type: "UNFOLLOW", payload: user._id });
 			} else {
 				await axios.put("/users/" + profile._id + "/follow", {
 					userId: user._id,
 				});
+				dispatch({ type: "FOLLOW", payload: user._id });
 			}
 			setFollowed(!followed);
 		} catch (err) {

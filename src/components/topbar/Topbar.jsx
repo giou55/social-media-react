@@ -6,7 +6,8 @@ import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
-export default function Topbar({ user }) {
+export default function Topbar() {
+	const { user} = useContext(AuthContext);
 	const [profile, setProfile] = useState(user);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const authCtx = useContext(AuthContext);

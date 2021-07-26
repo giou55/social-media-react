@@ -8,16 +8,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
 export default function Profile() {
-	const [user, setUser] = useState({});
 	const [profile, setProfile] = useState({});
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const fullname = useParams().fullname;
 
+	const fullname = useParams().fullname;
 	const firstname = fullname.split(".")[0];
 	const lastname = fullname.split(".")[1];
-
-	const userFirstname = localStorage.getItem("firstname");
-	const userLastname = localStorage.getItem("lastname");
 
 	useEffect(() => {
 		const fetchProfileData = async () => {
@@ -29,19 +25,9 @@ export default function Profile() {
 		fetchProfileData();
 	}, [firstname, lastname]);
 
-	useEffect(() => {
-		const fetchUserData = async () => {
-			const res = await axios.get(
-				`/users?firstname=${userFirstname}&lastname=${userLastname}`
-			);
-			setUser(res.data);
-		};
-		fetchUserData();
-	}, [userFirstname, userLastname]);
-
 	return (
 		<>
-			{user && <Topbar user={user} />}
+			<Topbar />
 			<div className="profile">
 				<Sidebar />
 				<div className="profileRight">
@@ -78,8 +64,8 @@ export default function Profile() {
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						<Feed user={profile} />
-						{user.followings && <ProfileRightbar profile={profile} user={user} />}
+						<Feed fullname={fullname} />
+						{profile && <ProfileRightbar profile={profile} />}
 					</div>
 				</div>
 			</div>

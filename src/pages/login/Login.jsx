@@ -8,7 +8,6 @@ export default function Login() {
 	const email = useRef();
 	const password = useRef();
 	const [errorMessage, setErrorMessage] = useState("");
-
 	const authCtx = useContext(AuthContext);
 
 	const submitHandler = async (e) => {
@@ -19,6 +18,7 @@ export default function Login() {
 		};
 		try {
 			const res = await axios.post("/auth/login", userCredentials);
+			authCtx.dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
 			if (res.data.message !== "") {
 				setErrorMessage(res.data.message);
 			} else {
