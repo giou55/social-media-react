@@ -1,8 +1,7 @@
 import "./editProfile.css";
 import { Cancel } from "@material-ui/icons";
-import { useRef, useContext, useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
-import { AuthContext } from "../../context/AuthContext";
 
 export default function EditProfile({
 	profile,
@@ -13,7 +12,6 @@ export default function EditProfile({
 	const profileDesc = useRef();
 	const profileCity = useRef();
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const { user } = useContext(AuthContext);
 	const [newCoverImg, setNewCoverImg] = useState("");
 
 	const closeEditProfile = () => {

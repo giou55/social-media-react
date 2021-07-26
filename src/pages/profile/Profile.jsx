@@ -8,9 +8,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
 export default function Profile() {
-	const [profile, setProfile] = useState({});
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
+	const [profile, setProfile] = useState("");
 	const fullname = useParams().fullname;
 	const firstname = fullname.split(".")[0];
 	const lastname = fullname.split(".")[1];
@@ -64,7 +63,7 @@ export default function Profile() {
 						</div>
 					</div>
 					<div className="profileRightBottom">
-						<Feed fullname={fullname} />
+						{profile && <Feed profile={profile} />}
 						{profile && <ProfileRightbar profile={profile} />}
 					</div>
 				</div>

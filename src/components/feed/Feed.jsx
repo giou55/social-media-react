@@ -6,14 +6,14 @@ import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 
-export default function Feed({ fullname }) {
+export default function Feed({ profile }) {
 	const [posts, setPosts] = useState([]);
 	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		const fetchPosts = async () => {
-			const res = fullname
-				? await axios.get("/posts/profile/" + user._id)
+			const res = profile
+				? await axios.get("/posts/profile/" + profile._id)
 				: await axios.get("/posts/timeline/" + user._id);
 			setPosts(
 				res.data.sort((p1, p2) => {
@@ -22,7 +22,7 @@ export default function Feed({ fullname }) {
 			);
 		};
 		fetchPosts();
-	}, [fullname, user]);
+	}, [profile, user]);
 
 	return (
 		<div className="feed">

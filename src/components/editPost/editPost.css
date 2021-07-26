@@ -41,6 +41,7 @@
 	margin: 15px 0;
 	font-size: 16px;
 	user-select: text;
+	max-width: 600px;
 	border: 1px solid #666;
 	border-radius: 5px;
 }

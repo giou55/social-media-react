@@ -64,42 +64,53 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 					{post.desc}
 				</div>
 
-				<div className="editPostImgContainer">
-					{!newImgFile && (
-						<div className="editPostImg">
-							<img
-								src={post.img ? PF + "/posts/" + post.img : ""}
-								alt=""
-							/>
-						</div>
-					)}
-					{newImgFile && (
-						<div className="editPostImg">
-							<img src={URL.createObjectURL(newImgFile)} alt="" />
-						</div>
-					)}
-					<div className="editPostImgForm">
-						<form>
-							<div>
-								<label
-									htmlFor="imgFile"
-									className="editPostImgLabel"
-								>
-									<span className="editPostImgText">
-										Change photo
-									</span>
-									<input
-										style={{ display: "none" }}
-										type="file"
-										id="imgFile"
-										accept=".png,.jpeg,.jpg"
-										onChange={(e) => changePhotoHandler(e)}
-									/>
-								</label>
+				{post.img !== "" && (
+					<div className="editPostImgContainer">
+						{!newImgFile && (
+							<div className="editPostImg">
+								<img
+									src={
+										post.img
+											? PF + "/posts/" + post.img
+											: ""
+									}
+									alt=""
+								/>
 							</div>
-						</form>
+						)}
+						{newImgFile && (
+							<div className="editPostImg">
+								<img
+									src={URL.createObjectURL(newImgFile)}
+									alt=""
+								/>
+							</div>
+						)}
+						<div className="editPostImgForm">
+							<form>
+								<div>
+									<label
+										htmlFor="imgFile"
+										className="editPostImgLabel"
+									>
+										<span className="editPostImgText">
+											Change photo
+										</span>
+										<input
+											style={{ display: "none" }}
+											type="file"
+											id="imgFile"
+											accept=".png,.jpeg,.jpg"
+											onChange={(e) =>
+												changePhotoHandler(e)
+											}
+										/>
+									</label>
+								</div>
+							</form>
+						</div>
 					</div>
-				</div>
+				)}
 
 				<button className="editPostButton" onClick={savePost}>
 					Save

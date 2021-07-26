@@ -7,12 +7,13 @@ import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
 export default function Topbar() {
-	const { user} = useContext(AuthContext);
-	const [profile, setProfile] = useState(user);
+	const { user } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const authCtx = useContext(AuthContext);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
+
+	const updateUser = () => {};
 
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);
@@ -88,9 +89,10 @@ export default function Topbar() {
 								>
 									<div>View profile</div>
 								</Link>
-								<div onClick={showEditProfile}>
+								{/* <div onClick={showEditProfile}>
 									Edit profile
-								</div>
+								</div> */}
+								<div>Edit profile</div>
 								<div onClick={deleteAcount}>Delete account</div>
 								<div onClick={authCtx.logout}>Logout</div>
 							</div>
@@ -100,9 +102,9 @@ export default function Topbar() {
 			</div>
 			{isDisplayedEditProfile && (
 				<EditProfile
-					profile={profile}
+					profile={user}
 					setEditProfile={setIsDisplayedEditProfile}
-					updateProfile={setProfile}
+					updateProfile={updateUser}
 				/>
 			)}
 		</>

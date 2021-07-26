@@ -7,11 +7,10 @@ import { AuthContext } from "../../context/AuthContext";
 
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
 	const { user, dispatch } = useContext(AuthContext);
 	const [friends, setFriends] = useState([]);
 	const [followed, setFollowed] = useState(
-		user.followings.includes(profile?._id)
+		profile.followers.includes(user?._id)
 	);
 
 	useEffect(() => {
@@ -25,8 +24,9 @@ export default function ProfileRightbar({ profile }) {
 				console.log(err);
 			}
 		};
+		setFollowed(profile.followers.includes(user?._id));
 		fetchUserFriends();
-	}, [profile]);
+	}, [profile, user]);
 
 	const handleClick = async () => {
 		try {
@@ -34,12 +34,12 @@ export default function ProfileRightbar({ profile }) {
 				await axios.put("/users/" + profile._id + "/unfollow", {
 					userId: user._id,
 				});
-				dispatch({ type: "UNFOLLOW", payload: user._id });
+				dispatch({ type: "UNFOLLOW", payload: profile._id });
 			} else {
 				await axios.put("/users/" + profile._id + "/follow", {
 					userId: user._id,
 				});
-				dispatch({ type: "FOLLOW", payload: user._id });
+				dispatch({ type: "FOLLOW", payload: profile._id });
 			}
 			setFollowed(!followed);
 		} catch (err) {

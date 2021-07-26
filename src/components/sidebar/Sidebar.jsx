@@ -9,12 +9,14 @@ import { WorkOutline } from "@material-ui/icons";
 import { Event } from "@material-ui/icons";
 import { School } from "@material-ui/icons";
 import User from "../user/User";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function Sidebar() {
 	const [users, setUsers] = useState([]);
+	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		const fetchUsersData = async () => {
@@ -68,15 +70,23 @@ export default function Sidebar() {
 				<button className="sidebarButton">Show More</button>
 				<hr className="sidebarHr" />
 				<ul className="sidebarFriendList">
-					{users.map((u) => (
-						<Link
-							key={u._id}
-							to={"/profile/" + u.firstname + "." + u.lastname}
-							style={{ textDecoration: "none" }}
-						>
-							<User key={u.id} user={u} />
-						</Link>
-					))}
+					{users.map(
+						(u) =>
+							u._id !== user._id && (
+								<Link
+									key={u._id}
+									to={
+										"/profile/" +
+										u.firstname +
+										"." +
+										u.lastname
+									}
+									style={{ textDecoration: "none" }}
+								>
+									<User key={u._id} user={u} />
+								</Link>
+							)
+					)}
 				</ul>
 			</div>
 		</div>
