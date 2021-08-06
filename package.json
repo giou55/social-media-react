@@ -40,5 +40,6 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy": "http://localhost:8800/api"
+	"proxy": "http://localhost:8800/api",
+	"proxy-new": "https://fb.giourmetakis.gr:8800/api"
 }
