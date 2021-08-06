@@ -12,11 +12,14 @@ import User from "../user/User";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+// import { AuthContext } from "../../context/AuthContext";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
 	const [users, setUsers] = useState([]);
-	const { user } = useContext(AuthContext);
+	// const { user } = useContext(AuthContext);
+
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		const fetchUsersData = async () => {

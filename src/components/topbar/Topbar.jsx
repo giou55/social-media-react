@@ -1,17 +1,22 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+// import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
 export default function Topbar() {
-	const { user } = useContext(AuthContext);
+	// const { user } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	const authCtx = useContext(AuthContext);
+	// const authCtx = useContext(AuthContext);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
+
+	const dispatch = useDispatch();
+
+	const user = useSelector((state) => state.user);
 
 	const updateUser = () => {};
 
@@ -27,11 +32,17 @@ export default function Topbar() {
 	const deleteAcount = (userId) => {
 		try {
 			axios.delete("/users/" + userId);
-			authCtx.logout();
+			// authCtx.logout();
+			dispatch({ type: "LOGOUT" });
 		} catch (err) {
 			console.log(err);
 		}
 	};
+
+	const logoutHandler = () => {
+		localStorage.clear();
+		dispatch({ type: "LOGOUT" });
+	}
 
 	return (
 		<>
@@ -94,7 +105,7 @@ export default function Topbar() {
 								</div> */}
 								<div>Edit profile</div>
 								<div onClick={deleteAcount}>Delete account</div>
-								<div onClick={authCtx.logout}>Logout</div>
+								<div onClick={logoutHandler}>Logout</div>
 							</div>
 						)}
 					</div>

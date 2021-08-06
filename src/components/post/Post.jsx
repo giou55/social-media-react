@@ -1,11 +1,12 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
 import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "timeago.js";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
+// import { useContext } from "react";
+// import { AuthContext } from "../../context/AuthContext";
 import EditPost from "../editPost/EditPost";
 
 export default function Post({ p }) {
@@ -16,7 +17,9 @@ export default function Post({ p }) {
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditPost, setIsDisplayedEditPost] = useState(false);
 	const [user, setUser] = useState({});
-	const { user: currentUser } = useContext(AuthContext);
+	// const { user: currentUser } = useContext(AuthContext);
+	const currentUser = useSelector((state) => state.user);
+
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
 	useEffect(() => {
