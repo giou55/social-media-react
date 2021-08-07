@@ -51,7 +51,19 @@
 	margin-bottom: 10px;
 }
 
-.editProfileImg img {
+.editProfileImgProfile {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.editProfileImgProfile img {
+	max-height: 100px;
+	max-width: 100%;
+	width: auto;
+}
+
+.editProfileImgCover img {
 	max-height: 400px;
 	max-width: 100%;
 	width: auto;
@@ -61,7 +73,7 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	padding: 7px 12px;
+	padding: 5px 8px;
 	background-color: black;
 	color: #fff;
 	border-radius: 5px;

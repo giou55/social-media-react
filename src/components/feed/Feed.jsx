@@ -5,7 +5,7 @@ import "./feed.css";
 import axios from "axios";
 // import { useContext } from "react";
 // import { AuthContext } from "../../context/AuthContext";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Feed({ profile }) {
 	const [posts, setPosts] = useState([]);
@@ -30,7 +30,7 @@ export default function Feed({ profile }) {
 	return (
 		<div className="feed">
 			<div className="feedWrapper">
-				{user && <Share user={user} />}
+				{(!profile || profile._id === user._id) && <Share user={user} />}
 				{posts && posts.length > 0 ? "" : "No Posts"}
 				{posts.map((p) => (
 					<Post key={p._id} p={p} />

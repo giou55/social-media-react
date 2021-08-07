@@ -3,11 +3,16 @@ import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
 import axios from "axios";
 
-export default function EditPost({ post, setEditPost, updatePost }) {
+export default function EditPost({
+	post,
+	setEditPost,
+	updatePost,
+}) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const editPost = useRef();
 	const postInput = useRef();
 	const [newImgFile, setNewImgFile] = useState("");
+	const [isDeleted, setIsDeleted] = useState(false);
 
 	const closeEditPost = () => {
 		setEditPost(false);
@@ -64,7 +69,7 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 					{post.desc}
 				</div>
 
-				{post.img !== "" && (
+				{post.img !== "" && !isDeleted && (
 					<div className="editPostImgContainer">
 						{!newImgFile && (
 							<div className="editPostImg">
@@ -86,29 +91,31 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 								/>
 							</div>
 						)}
-						<div className="editPostImgForm">
-							<form>
-								<div>
-									<label
-										htmlFor="imgFile"
-										className="editPostImgLabel"
-									>
-										<span className="editPostImgText">
-											Change photo
-										</span>
-										<input
-											style={{ display: "none" }}
-											type="file"
-											id="imgFile"
-											accept=".png,.jpeg,.jpg"
-											onChange={(e) =>
-												changePhotoHandler(e)
-											}
-										/>
-									</label>
-								</div>
-							</form>
-						</div>
+						{post.img !== "" && (
+							<div className="editPostImgChange">
+								<form>
+									<div>
+										<label
+											htmlFor="imgFile"
+											className="editPostImgLabel"
+										>
+											<span className="editPostImgText">
+												Change photo
+											</span>
+											<input
+												style={{ display: "none" }}
+												type="file"
+												id="imgFile"
+												accept=".png,.jpeg,.jpg"
+												onChange={(e) =>
+													changePhotoHandler(e)
+												}
+											/>
+										</label>
+									</div>
+								</form>
+							</div>
+						)}
 					</div>
 				)}
 

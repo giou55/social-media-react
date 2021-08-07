@@ -3,14 +3,11 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import { AuthContext } from "../../context/AuthContext";
 import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
 export default function Topbar() {
-	// const { user } = useContext(AuthContext);
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	// const authCtx = useContext(AuthContext);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
 
@@ -32,7 +29,6 @@ export default function Topbar() {
 	const deleteAcount = (userId) => {
 		try {
 			axios.delete("/users/" + userId);
-			// authCtx.logout();
 			dispatch({ type: "LOGOUT" });
 		} catch (err) {
 			console.log(err);
@@ -100,10 +96,9 @@ export default function Topbar() {
 								>
 									<div>View profile</div>
 								</Link>
-								{/* <div onClick={showEditProfile}>
+								<div onClick={showEditProfile}>
 									Edit profile
-								</div> */}
-								<div>Edit profile</div>
+								</div>
 								<div onClick={deleteAcount}>Delete account</div>
 								<div onClick={logoutHandler}>Logout</div>
 							</div>

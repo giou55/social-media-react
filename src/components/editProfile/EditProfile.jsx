@@ -12,6 +12,7 @@ export default function EditProfile({
 	const profileDesc = useRef();
 	const profileCity = useRef();
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
 
 	const closeEditProfile = () => {
@@ -20,6 +21,11 @@ export default function EditProfile({
 
 	const changeCoverImg = (e) => {
 		setNewCoverImg(e.target.files[0]);
+		e.target.value = null;
+	};
+
+	const changeProfileImg = (e) => {
+		setNewProfileImg(e.target.files[0]);
 		e.target.value = null;
 	};
 
@@ -81,9 +87,59 @@ export default function EditProfile({
 					</div>
 				</div>
 
+				<div className="editProfileHeader">
+					{profile.firstname} {profile.lastname}
+				</div>
+
+				<div className="editProfileImgContainer">
+					{!newProfileImg && (
+						<div className="editProfileImgProfile">
+							<img
+								src={
+									profile.profilePicture
+										? PF +
+										  "/users/" +
+										  profile.profilePicture
+										: PF + "/users/noAvatar.png"
+								}
+								alt=""
+							/>
+						</div>
+					)}
+					{newProfileImg && (
+						<div className="editProfileImgProfile">
+							<img
+								src={URL.createObjectURL(newProfileImg)}
+								alt=""
+							/>
+						</div>
+					)}
+					<div className="editProfileImgForm">
+						<form>
+							<div>
+								<label
+									htmlFor="profileFile"
+									className="editProfileImgLabel"
+								>
+									<span className="editProfileImgText">
+										Change photo
+									</span>
+									<input
+										style={{ display: "none" }}
+										type="file"
+										id="profileFile"
+										accept=".png,.jpeg,.jpg"
+										onChange={(e) => changeProfileImg(e)}
+									/>
+								</label>
+							</div>
+						</form>
+					</div>
+				</div>
+
 				<div className="editProfileImgContainer">
 					{!newCoverImg && (
-						<div className="editProfileImg">
+						<div className="editProfileImgCover">
 							<img
 								src={
 									profile.coverPicture
@@ -95,7 +151,7 @@ export default function EditProfile({
 						</div>
 					)}
 					{newCoverImg && (
-						<div className="editProfileImg">
+						<div className="editProfileImgCover">
 							<img
 								src={URL.createObjectURL(newCoverImg)}
 								alt=""

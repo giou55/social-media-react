@@ -24,30 +24,6 @@ const counterReducer = (state = initialState, action) => {
 			error: false,
 		};
 	}
-	if (action.type === "FOLLOW") {
-		return {
-			user: {
-				...state.user,
-				followings: [...state.user.followings, action.payload],
-			},
-			token: null,
-			isLoggedIn: false,
-			error: false,
-		};
-	}
-	if (action.type === "UNFOLLOW") {
-		return {
-			user: {
-				...state.user,
-				followings: state.user.followings.filter(
-					(following) => following !== action.payload
-				),
-			},
-			token: null,
-			isLoggedIn: false,
-			error: false,
-		};
-	}
 	if (action.type === "UPDATE_PROFILE") {
 		return {
 			user: action.payload.user,

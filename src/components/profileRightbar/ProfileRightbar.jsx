@@ -5,12 +5,11 @@ import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
 // import { AuthContext } from "../../context/AuthContext";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	// const { user, dispatch } = useContext(AuthContext);
-	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	
 	const [friends, setFriends] = useState([]);
@@ -39,12 +38,10 @@ export default function ProfileRightbar({ profile }) {
 				await axios.put("/users/" + profile._id + "/unfollow", {
 					userId: user._id,
 				});
-				dispatch({ type: "UNFOLLOW", payload: profile._id });
 			} else {
 				await axios.put("/users/" + profile._id + "/follow", {
 					userId: user._id,
 				});
-				dispatch({ type: "FOLLOW", payload: profile._id });
 			}
 			setFollowed(!followed);
 		} catch (err) {

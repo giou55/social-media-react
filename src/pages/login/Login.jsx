@@ -81,7 +81,6 @@ export default function Login() {
 						<button className="loginButton" type="submit">
 							Log in
 						</button>
-						<span className="loginForgot">Forgot Password?</span>
 						<Link to="/register">
 							<button className="loginRegisterButton">
 								Create a New Account
