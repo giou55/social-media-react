@@ -12,7 +12,6 @@ export default function EditPost({
 	const editPost = useRef();
 	const postInput = useRef();
 	const [newImgFile, setNewImgFile] = useState("");
-	const [isDeleted, setIsDeleted] = useState(false);
 
 	const closeEditPost = () => {
 		setEditPost(false);
@@ -69,7 +68,7 @@ export default function EditPost({
 					{post.desc}
 				</div>
 
-				{post.img !== "" && !isDeleted && (
+				{post.img !== "" && (
 					<div className="editPostImgContainer">
 						{!newImgFile && (
 							<div className="editPostImg">

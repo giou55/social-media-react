@@ -15,7 +15,10 @@ export default function Topbar() {
 
 	const user = useSelector((state) => state.user);
 
-	const updateUser = () => {};
+	const updateProfile = (newprofile) => {
+		dispatch({ type: "UPDATE", payload: newprofile });
+		console.log(newprofile);
+	};
 
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);
@@ -38,7 +41,7 @@ export default function Topbar() {
 	const logoutHandler = () => {
 		localStorage.clear();
 		dispatch({ type: "LOGOUT" });
-	}
+	};
 
 	return (
 		<>
@@ -110,7 +113,7 @@ export default function Topbar() {
 				<EditProfile
 					profile={user}
 					setEditProfile={setIsDisplayedEditProfile}
-					updateProfile={updateUser}
+					updateProfile={updateProfile}
 				/>
 			)}
 		</>

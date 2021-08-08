@@ -68,7 +68,7 @@ export default function EditProfile({
 			await axios.put("/users/" + profile._id, newprofile);
 			updateProfile(newprofile);
 			setEditProfile(false);
-			window.location.reload();
+			// window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}
@@ -189,7 +189,7 @@ export default function EditProfile({
 					suppressContentEditableWarning="true"
 					ref={profileDesc}
 				>
-					{profile.desc}
+					{profile.desc ? profile.desc : "Hello my friends!"}
 				</div>
 
 				<div className="editProfileHeader">City</div>
@@ -200,7 +200,7 @@ export default function EditProfile({
 					suppressContentEditableWarning="true"
 					ref={profileCity}
 				>
-					{profile.city}
+					{(profile.city === "-") ? "" : profile.city}
 				</div>
 
 				<form>

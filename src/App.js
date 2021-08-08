@@ -9,13 +9,10 @@ import {
 	Route,
 	Redirect,
 } from "react-router-dom";
-// import { useContext } from "react";
-// import { AuthContext } from "./context/AuthContext";
 
 import { useSelector } from "react-redux";
 
 function App() {
-	// const { isLoggedIn } = useContext(AuthContext);
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
 	return (

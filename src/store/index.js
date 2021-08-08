@@ -24,9 +24,9 @@ const counterReducer = (state = initialState, action) => {
 			error: false,
 		};
 	}
-	if (action.type === "UPDATE_PROFILE") {
+	if (action.type === "UPDATE") {
 		return {
-			user: action.payload.user,
+			user: action.payload,
 			token: state.token,
 			isLoggedIn: state.isLoggedIn,
 			error: state.error,

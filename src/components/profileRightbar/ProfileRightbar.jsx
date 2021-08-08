@@ -1,17 +1,14 @@
 import "./profilerightbar.css";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
-// import { AuthContext } from "../../context/AuthContext";
-
 import { useSelector } from "react-redux";
 
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-	// const { user, dispatch } = useContext(AuthContext);
 	const user = useSelector((state) => state.user);
-	
+
 	const [friends, setFriends] = useState([]);
 	const [followed, setFollowed] = useState(
 		profile.followers.includes(user?._id)
@@ -61,37 +58,32 @@ export default function ProfileRightbar({ profile }) {
 						{followed ? <Remove /> : <Add />}
 					</button>
 				)}
-				<h4 className="rightbarTitle">User information</h4>
+				<h4 className="rightbarTitle">Ιnformation</h4>
 				<div className="rightbarInfo">
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">City:</span>
 						<span className="rightbarInfoValue">
-							{profile.city ? profile.city : "New York"}
+							{profile.city}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Sex:</span>
-						<span className="rightbarInfoValue">
-							{profile.from ? profile.from : "Undefined"}
-						</span>
+						<span className="rightbarInfoValue">{profile.sex}</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Birthday:</span>
 						<span className="rightbarInfoValue">
-							{profile.birthday ? profile.birthday : "Undefined"}
+							{profile.birthday ? profile.birthday : "-"}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Relationship:</span>
 						<span className="rightbarInfoValue">
-							{profile.relationship
-								? profile.relationship
-								: "Undefined"}
-							{/* {user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : "-"} */}
+							{profile.relationship}
 						</span>
 					</div>
 				</div>
-				<h4 className="rightbarTitle">User friends</h4>
+				<h4 className="rightbarTitle">Following</h4>
 				<div className="rightbarFollowings">
 					{friends.map((friend) => (
 						<Link

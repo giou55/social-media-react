@@ -1,7 +1,6 @@
-import { useContext, useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./login.css";
-// import { AuthContext } from "../../context/AuthContext";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
@@ -9,15 +8,7 @@ export default function Login() {
 	const email = useRef();
 	const password = useRef();
 	const [errorMessage, setErrorMessage] = useState("");
-	// const authCtx = useContext(AuthContext);
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
-	const token = useSelector((state) => state.token);
-
-	// useEffect(() => {
-	// 	localStorage.setItem("user", JSON.stringify(user));
-	// 	localStorage.setItem("token", token);
-	// }, [user, token]);
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
