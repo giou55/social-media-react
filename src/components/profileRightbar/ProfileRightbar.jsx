@@ -14,6 +14,10 @@ export default function ProfileRightbar({ profile }) {
 		profile.followers.includes(user?._id)
 	);
 
+	if (profile._id === user._id) {
+		profile = user;
+	}
+
 	useEffect(() => {
 		const fetchUserFriends = async () => {
 			try {
@@ -63,7 +67,7 @@ export default function ProfileRightbar({ profile }) {
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">City:</span>
 						<span className="rightbarInfoValue">
-							{profile.city}
+							{(profile.city === "") ? "-" : profile.city}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">

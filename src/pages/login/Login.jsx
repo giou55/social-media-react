@@ -10,7 +10,7 @@ export default function Login() {
 	const [errorMessage, setErrorMessage] = useState("");
 	const dispatch = useDispatch();
 
-	const submitHandler = async (e) => {
+	const login = async (e) => {
 		e.preventDefault();
 		const userCredentials = {
 			email: email.current.value,
@@ -43,8 +43,8 @@ export default function Login() {
 						Friendbook.
 					</span>
 				</div>
-				<div className="loginRight" onSubmit={submitHandler}>
-					<form className="loginBox">
+				<div className="loginRight">
+					<form className="loginBox" onSubmit={login}>
 						<label htmlFor="email">
 							<b>Email</b>
 						</label>

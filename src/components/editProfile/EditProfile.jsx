@@ -1,19 +1,21 @@
 import "./editProfile.css";
 import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
-export default function EditProfile({
-	profile,
-	setEditProfile,
-	updateProfile,
-}) {
+export default function EditProfile({ setEditProfile }) {
 	const editProfile = useRef();
 	const profileDesc = useRef();
 	const profileCity = useRef();
+	const profileSex = useRef();
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
+
+	const dispatch = useDispatch();
+
+	const profile = useSelector((state) => state.user);
 
 	const closeEditProfile = () => {
 		setEditProfile(false);
@@ -29,22 +31,21 @@ export default function EditProfile({
 		e.target.value = null;
 	};
 
-	// const submitHandler = async (e) => {
-	// 	e.preventDefault();
-	// 	const newprofile = {
-	// 		...profile,
-	// 		desc: profileDesc.current.innerText,
-	// 		city: profileCity.current.innerText,
-	// 	};
-	// 	try {
-	// 		await axios.put("/users/" + profile._id, newprofile);
-	// 		updateProfile(newprofile);
-	// 		setEditProfile(false);
-	// 		window.location.reload();
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 	}
-	// };
+	const onSexValueChange = (event) => {
+		const newprofile = {
+			...profile,
+			sex: event.target.value,
+		};
+		dispatch({ type: "UPDATE", payload: newprofile });
+	};
+
+	const onRelationshipValueChange = (event) => {
+		const newprofile = {
+			...profile,
+			relationship: event.target.value,
+		};
+		dispatch({ type: "UPDATE", payload: newprofile });
+	};
 
 	const saveProfile = async () => {
 		const newprofile = {
@@ -66,9 +67,9 @@ export default function EditProfile({
 		}
 		try {
 			await axios.put("/users/" + profile._id, newprofile);
-			updateProfile(newprofile);
+			dispatch({ type: "UPDATE", payload: newprofile });
+			localStorage.setItem("user", JSON.stringify(newprofile));
 			setEditProfile(false);
-			// window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}
@@ -200,7 +201,7 @@ export default function EditProfile({
 					suppressContentEditableWarning="true"
 					ref={profileCity}
 				>
-					{(profile.city === "-") ? "" : profile.city}
+					{profile.city === "-" ? "" : profile.city}
 				</div>
 
 				<form>
@@ -210,14 +211,20 @@ export default function EditProfile({
 							className="editProfileRadio"
 							type="radio"
 							id="male"
+							value="Male"
+							checked={profile.sex === "Male"}
 							name="sex"
+							onChange={onSexValueChange}
 						/>
 						<label htmlFor="male">Male</label>
 						<input
 							className="editProfileRadio"
 							type="radio"
 							id="female"
+							value="Female"
+							checked={profile.sex === "Female"}
 							name="sex"
+							onChange={onSexValueChange}
 						/>
 						<label htmlFor="female">Female</label>
 					</div>
@@ -238,6 +245,9 @@ export default function EditProfile({
 							type="radio"
 							id="single"
 							name="relationship"
+							value="Single"
+							checked={profile.relationship === "Single"}
+							onChange={onRelationshipValueChange}
 						/>
 						<label htmlFor="single">Single</label>
 						<input
@@ -245,6 +255,9 @@ export default function EditProfile({
 							type="radio"
 							id="married"
 							name="relationship"
+							value="Married"
+							checked={profile.relationship === "Married"}
+							onChange={onRelationshipValueChange}
 						/>
 						<label htmlFor="married">Married</label>
 						<input
@@ -252,6 +265,9 @@ export default function EditProfile({
 							type="radio"
 							id="complicated"
 							name="relationship"
+							value="Complicated"
+							checked={profile.relationship === "Complicated"}
+							onChange={onRelationshipValueChange}
 						/>
 						<label htmlFor="complicated">Complicated</label>
 					</div>

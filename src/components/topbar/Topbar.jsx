@@ -15,11 +15,6 @@ export default function Topbar() {
 
 	const user = useSelector((state) => state.user);
 
-	const updateProfile = (newprofile) => {
-		dispatch({ type: "UPDATE", payload: newprofile });
-		console.log(newprofile);
-	};
-
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);
 	};
@@ -62,8 +57,9 @@ export default function Topbar() {
 				</div>
 				<div className="topbarRight">
 					<div className="topbarLinks">
-						<span className="topbarLink">Homepage</span>
-						<span className="topbarLink">Timeline</span>
+						<Link to="/" style={{ textDecoration: "none" }}>
+							<span className="topbarLink">Home</span>
+						</Link>
 					</div>
 					<div className="topbarIcons">
 						<div className="topbarIconItem">
@@ -110,11 +106,7 @@ export default function Topbar() {
 				</div>
 			</div>
 			{isDisplayedEditProfile && (
-				<EditProfile
-					profile={user}
-					setEditProfile={setIsDisplayedEditProfile}
-					updateProfile={updateProfile}
-				/>
+				<EditProfile setEditProfile={setIsDisplayedEditProfile} />
 			)}
 		</>
 	);

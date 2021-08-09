@@ -5,6 +5,7 @@ import ProfileRightbar from "../../components/profileRightbar/ProfileRightbar";
 import "./profile.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router";
 
 export default function Profile() {
@@ -13,16 +14,21 @@ export default function Profile() {
 	const fullname = useParams().fullname;
 	const firstname = fullname.split(".")[0];
 	const lastname = fullname.split(".")[1];
+	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
 		const fetchProfileData = async () => {
 			const res = await axios.get(
 				`/users?firstname=${firstname}&lastname=${lastname}`
 			);
-			setProfile(res.data);
+			if (res.data._id === user._id) {
+				setProfile(user);
+			} else {
+				setProfile(res.data);
+			}
 		};
 		fetchProfileData();
-	}, [firstname, lastname]);
+	}, [firstname, lastname, user]);
 
 	return (
 		<>
