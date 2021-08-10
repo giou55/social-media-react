@@ -85,15 +85,32 @@ export default function Post({ p }) {
 								<Link
 									to={`/profile/${user.firstname}.${user.lastname}`}
 								>
-									<img
-										className="postProfileImg"
-										src={
-											user.profilePicture
-												? PF + user.profilePicture
-												: PF + "/users/noAvatar.png"
-										}
-										alt=""
-									/>
+									{p.userId === currentUser._id && (
+										<img
+											className="postProfileImg"
+											src={
+												user.profilePicture
+													? PF +
+													  "/users/" +
+													  currentUser.profilePicture
+													: PF + "/users/noAvatar.png"
+											}
+											alt=""
+										/>
+									)}
+									{p.userId !== currentUser._id && (
+										<img
+											className="postProfileImg"
+											src={
+												user.profilePicture
+													? PF +
+													  "/users/" +
+													  user.profilePicture
+													: PF + "/users/noAvatar.png"
+											}
+											alt=""
+										/>
+									)}
 								</Link>
 								<span className="postUsername">
 									{user.username}

@@ -3,13 +3,10 @@ import Post from "../post/Post";
 import Share from "../share/Share";
 import "./feed.css";
 import axios from "axios";
-// import { useContext } from "react";
-// import { AuthContext } from "../../context/AuthContext";
 import { useSelector } from "react-redux";
 
 export default function Feed({ profile }) {
 	const [posts, setPosts] = useState([]);
-	// const { user } = useContext(AuthContext);
 
 	const user = useSelector((state) => state.user);
 

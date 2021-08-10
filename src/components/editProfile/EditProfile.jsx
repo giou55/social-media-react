@@ -8,14 +8,17 @@ export default function EditProfile({ setEditProfile }) {
 	const editProfile = useRef();
 	const profileDesc = useRef();
 	const profileCity = useRef();
-	const profileSex = useRef();
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const profile = useSelector((state) => state.user);
 	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
+	const [dayInput, setDayInput] = useState(profile.birthday.split("/")[0]);
+	const [monthInput, setMonthInput] = useState(
+		profile.birthday.split("/")[1]
+	);
+	const [yearInput, setYearInput] = useState(profile.birthday.split("/")[2]);
 
 	const dispatch = useDispatch();
-
-	const profile = useSelector((state) => state.user);
 
 	const closeEditProfile = () => {
 		setEditProfile(false);
@@ -39,6 +42,21 @@ export default function EditProfile({ setEditProfile }) {
 		dispatch({ type: "UPDATE", payload: newprofile });
 	};
 
+	const onBirthdayValueChange = (event) => {
+		const date = event.target.value.split("-");
+		let day = date[2];
+		let month = date[1];
+		let year = date[0];
+		const newprofile = {
+			...profile,
+			birthday: day + "/" + month + "/" + year,
+		};
+		dispatch({ type: "UPDATE", payload: newprofile });
+		setDayInput(day);
+		setMonthInput(month);
+		setYearInput(year);
+	};
+
 	const onRelationshipValueChange = (event) => {
 		const newprofile = {
 			...profile,
@@ -53,6 +71,18 @@ export default function EditProfile({ setEditProfile }) {
 			desc: profileDesc.current.innerText,
 			city: profileCity.current.innerText,
 		};
+		if (newProfileImg) {
+			const data = new FormData();
+			const fileName = Date.now() + newProfileImg.name;
+			data.append("name", fileName);
+			data.append("file", newProfileImg);
+			newprofile.profilePicture = fileName;
+			try {
+				await axios.post("/upload/users", data);
+			} catch (err) {
+				console.log(err);
+			}
+		}
 		if (newCoverImg) {
 			const data = new FormData();
 			const fileName = Date.now() + newCoverImg.name;
@@ -235,6 +265,10 @@ export default function EditProfile({ setEditProfile }) {
 							type="date"
 							id="birthday"
 							name="birthday"
+							value={
+								yearInput + "-" + monthInput + "-" + dayInput
+							}
+							onChange={onBirthdayValueChange}
 						></input>
 					</div>
 

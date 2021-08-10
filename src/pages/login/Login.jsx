@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import "./login.css";
 import { Link } from "react-router-dom";
 import axios from "axios";

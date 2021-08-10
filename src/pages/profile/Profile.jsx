@@ -50,7 +50,9 @@ export default function Profile() {
 							<img
 								src={
 									profile.profilePicture
-										? PF + profile.profilePicture
+										? PF +
+										  "/users/" +
+										  profile.profilePicture
 										: PF + "/users/noAvatar.png"
 								}
 								alt=""
