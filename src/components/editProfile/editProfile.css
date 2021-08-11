@@ -63,8 +63,14 @@
 	width: auto;
 }
 
+.editProfileImgCover {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 .editProfileImgCover img {
-	max-height: 400px;
+	max-height: 200px;
 	max-width: 100%;
 	width: auto;
 }

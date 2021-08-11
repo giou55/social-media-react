@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { Add, Remove } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -13,6 +13,7 @@ export default function ProfileRightbar({ profile }) {
 	const [followed, setFollowed] = useState(
 		profile.followers.includes(user?._id)
 	);
+	const dispatch = useDispatch();
 
 	if (profile._id === user._id) {
 		profile = user;
@@ -33,16 +34,28 @@ export default function ProfileRightbar({ profile }) {
 		fetchUserFriends();
 	}, [profile, user]);
 
-	const handleClick = async () => {
+	const followingHandler = async () => {
 		try {
 			if (followed) {
 				await axios.put("/users/" + profile._id + "/unfollow", {
 					userId: user._id,
 				});
+				const updatedUser = {
+					...user,
+					followings: user.followings.filter(
+						(following) => following !== profile._id
+					),
+				};
+				dispatch({ type: "UNFOLLOW", payload: updatedUser });
 			} else {
 				await axios.put("/users/" + profile._id + "/follow", {
 					userId: user._id,
 				});
+				const updatedUser = {
+					...user,
+					followings: [...user.followings, profile._id]
+				};
+				dispatch({ type: "FOLLOW", payload: updatedUser });
 			}
 			setFollowed(!followed);
 		} catch (err) {
@@ -56,7 +69,7 @@ export default function ProfileRightbar({ profile }) {
 				{profile.email !== user.email && (
 					<button
 						className="rightbarFollowButton"
-						onClick={handleClick}
+						onClick={followingHandler}
 					>
 						{followed ? "Unfollow" : "Follow"}
 						{followed ? <Remove /> : <Add />}
@@ -67,7 +80,7 @@ export default function ProfileRightbar({ profile }) {
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">City:</span>
 						<span className="rightbarInfoValue">
-							{(profile.city === "") ? "-" : profile.city}
+							{profile.city === "" ? "-" : profile.city}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">

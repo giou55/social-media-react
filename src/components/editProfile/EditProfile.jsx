@@ -98,7 +98,6 @@ export default function EditProfile({ setEditProfile }) {
 		try {
 			await axios.put("/users/" + profile._id, newprofile);
 			dispatch({ type: "UPDATE", payload: newprofile });
-			localStorage.setItem("user", JSON.stringify(newprofile));
 			setEditProfile(false);
 		} catch (err) {
 			console.log(err);

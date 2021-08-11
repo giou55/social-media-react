@@ -24,6 +24,22 @@ const counterReducer = (state = initialState, action) => {
 			error: false,
 		};
 	}
+	if (action.type === "FOLLOW") {
+		return {
+			user: action.payload,
+			token: state.token,
+			isLoggedIn: state.isLoggedIn,
+			error: state.error,
+		};
+	}
+	if (action.type === "UNFOLLOW") {
+		return {
+			user: action.payload,
+			token: state.token,
+			isLoggedIn: state.isLoggedIn,
+			error: state.error,
+		};
+	}
 	if (action.type === "UPDATE") {
 		return {
 			user: action.payload,
