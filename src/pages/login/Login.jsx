@@ -19,6 +19,7 @@ export default function Login() {
 		try {
 			const res = await axios.post("/auth/login", userCredentials);
 			dispatch({ type: "LOGIN", payload: res.data });
+			localStorage.setItem("userId", res.data.userId);
 			localStorage.setItem("token", res.data.token);
 			localStorage.setItem("isLoggedIn", "true");
 			// if (res.data.message !== "") {

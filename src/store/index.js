@@ -1,7 +1,8 @@
 import { createStore } from "redux";
 
 const initialState = {
-	user: JSON.parse(localStorage.getItem("user")) || null,
+	user: null,
+	userId: JSON.parse(localStorage.getItem("userId")) || null,
 	token: localStorage.getItem("token") || null,
 	isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
 	error: false,
@@ -10,7 +11,8 @@ const initialState = {
 const counterReducer = (state = initialState, action) => {
 	if (action.type === "LOGIN") {
 		return {
-			user: action.payload.user,
+			user: state.user,
+			userId: action.payload.userId,
 			token: action.payload.token,
 			isLoggedIn: true,
 			error: false,
@@ -19,6 +21,7 @@ const counterReducer = (state = initialState, action) => {
 	if (action.type === "LOGOUT") {
 		return {
 			user: null,
+			userId: null,
 			token: null,
 			isLoggedIn: false,
 			error: false,
@@ -27,6 +30,7 @@ const counterReducer = (state = initialState, action) => {
 	if (action.type === "FOLLOW") {
 		return {
 			user: action.payload,
+			userId: state.userId,
 			token: state.token,
 			isLoggedIn: state.isLoggedIn,
 			error: state.error,
@@ -35,6 +39,7 @@ const counterReducer = (state = initialState, action) => {
 	if (action.type === "UNFOLLOW") {
 		return {
 			user: action.payload,
+			userId: state.userId,
 			token: state.token,
 			isLoggedIn: state.isLoggedIn,
 			error: state.error,
@@ -43,6 +48,7 @@ const counterReducer = (state = initialState, action) => {
 	if (action.type === "UPDATE") {
 		return {
 			user: action.payload,
+			userId: state.userId,
 			token: state.token,
 			isLoggedIn: state.isLoggedIn,
 			error: state.error,
