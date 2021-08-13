@@ -17,7 +17,7 @@ export default function HomeRightbar() {
 						birthday today
 					</span>
 				</div>
-				<img className="rightbarAd" src="./assets/ad.png" alt="" />
+				<img className="rightbarAd" src="./assets/ad.jpg" alt="" />
 				<h4 className="rightbarTitle">Online Friends</h4>
 				<ul className="rightbarFriendList">
 					{Users.map((u) => (

@@ -2,7 +2,7 @@ import { createStore } from "redux";
 
 const initialState = {
 	user: null,
-	userId: JSON.parse(localStorage.getItem("userId")) || null,
+	userId: localStorage.getItem("userId") || null,
 	token: localStorage.getItem("token") || null,
 	isLoggedIn: localStorage.getItem("isLoggedIn") === "true",
 	error: false,

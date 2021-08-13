@@ -5,36 +5,45 @@ import ProfileRightbar from "../../components/profileRightbar/ProfileRightbar";
 import "./profile.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router";
 
 export default function Profile() {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [profile, setProfile] = useState("");
+
 	const fullname = useParams().fullname;
 	const firstname = fullname.split(".")[0];
 	const lastname = fullname.split(".")[1];
+
+	const userId = useSelector((state) => state.userId);
 	const user = useSelector((state) => state.user);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		const fetchUser = async () => {
+			const res = await axios.get("/users?userId=" + userId);
+			dispatch({ type: "UPDATE", payload: res.data });
+		};
+		fetchUser();
+	}, [userId, dispatch]);
 
 	useEffect(() => {
 		const fetchProfileData = async () => {
 			const res = await axios.get(
 				`/users?firstname=${firstname}&lastname=${lastname}`
 			);
-			if (res.data._id === user._id) {
-				setProfile(user);
-			} else {
-				setProfile(res.data);
-			}
+			setProfile(res.data);
 		};
 		fetchProfileData();
 	}, [firstname, lastname, user]);
 
 	return (
 		<>
-			<Topbar />
+			{user && <Topbar user={user} />}
 			<div className="profile">
-				<Sidebar />
+				{user && <Sidebar user={user} />}
 				<div className="profileRight">
 					<div className="profileRightTop">
 						<div className="profileCover">

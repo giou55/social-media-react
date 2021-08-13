@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 export default function Home() {
 	const userId = useSelector((state) => state.userId);
 	const user = useSelector((state) => state.user);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -22,10 +23,10 @@ export default function Home() {
 
 	return (
 		<>
-			{user && <Topbar />}
+			{user && <Topbar user={user} />}
 			{user && (
 				<div className="homeContainer">
-					<Sidebar />
+					<Sidebar user={user} />
 					<Feed />
 					<HomeRightbar />
 				</div>

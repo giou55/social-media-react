@@ -2,18 +2,16 @@ import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import EditProfile from "../editProfile/EditProfile";
 import axios from "axios";
 
-export default function Topbar() {
+export default function Topbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
 
 	const dispatch = useDispatch();
-
-	const user = useSelector((state) => state.user);
 
 	const toggleActions = () => {
 		setIsDisplayedActions(!isDisplayedActions);

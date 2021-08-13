@@ -43,7 +43,7 @@ export default function Post({ p }) {
 		return () => {
 			source.cancel("request cancelled");
 		};
-	}, [post.userId]);
+	}, [post.userId, currentUser]);
 
 	const likeHandler = () => {
 		try {

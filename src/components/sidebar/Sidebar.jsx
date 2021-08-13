@@ -12,11 +12,9 @@ import User from "../user/User";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
-export default function Sidebar() {
-	const [users, setUsers] = useState([]);
-	const user = useSelector((state) => state.user);
+export default function Sidebar({ user }) {
+	const [users, setUsers] = useState(null);
 
 	useEffect(() => {
 		const fetchUsersData = async () => {
@@ -69,25 +67,27 @@ export default function Sidebar() {
 				</ul>
 				<button className="sidebarButton">Show More</button>
 				<hr className="sidebarHr" />
-				<ul className="sidebarFriendList">
-					{users.map(
-						(u) =>
-							u._id !== user._id && (
-								<Link
-									key={u._id}
-									to={
-										"/profile/" +
-										u.firstname +
-										"." +
-										u.lastname
-									}
-									style={{ textDecoration: "none" }}
-								>
-									<User key={u._id} user={u} />
-								</Link>
-							)
-					)}
-				</ul>
+				{users && (
+					<ul className="sidebarFriendList">
+						{users.map(
+							(u) =>
+								u._id !== user._id && (
+									<Link
+										key={u._id}
+										to={
+											"/profile/" +
+											u.firstname +
+											"." +
+											u.lastname
+										}
+										style={{ textDecoration: "none" }}
+									>
+										<User key={u._id} user={u} />
+									</Link>
+								)
+						)}
+					</ul>
+				)}
 			</div>
 		</div>
 	);

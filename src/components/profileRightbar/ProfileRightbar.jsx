@@ -53,7 +53,7 @@ export default function ProfileRightbar({ profile }) {
 				});
 				const updatedUser = {
 					...user,
-					followings: [...user.followings, profile._id]
+					followings: [...user.followings, profile._id],
 				};
 				dispatch({ type: "FOLLOW", payload: updatedUser });
 			}
@@ -117,7 +117,9 @@ export default function ProfileRightbar({ profile }) {
 								<img
 									src={
 										friend.profilePicture
-											? PF + "/users/" + friend.profilePicture
+											? PF +
+											  "/users/" +
+											  friend.profilePicture
 											: PF + "/users/noAvatar.png"
 									}
 									alt=""
