@@ -17,7 +17,10 @@ export default function Login() {
 			password: password.current.value,
 		};
 		try {
-			const res = await axios.post("/auth/login", userCredentials);
+			const res = await axios.post(
+				process.env.REACT_APP_API_URL + "/auth/login",
+				userCredentials
+			);
 			dispatch({ type: "LOGIN", payload: res.data });
 			localStorage.setItem("userId", res.data.userId);
 			localStorage.setItem("token", res.data.token);

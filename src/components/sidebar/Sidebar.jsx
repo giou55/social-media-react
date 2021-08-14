@@ -18,7 +18,9 @@ export default function Sidebar({ user }) {
 
 	useEffect(() => {
 		const fetchUsersData = async () => {
-			const res = await axios.get("/users/all");
+			const res = await axios.get(
+				process.env.REACT_APP_API_URL + "/users/all"
+			);
 			setUsers(res.data);
 		};
 		fetchUsersData();

@@ -15,7 +15,9 @@ export default function Home() {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const res = await axios.get("/users?userId=" + userId);
+			const res = await axios.get(
+				process.env.REACT_APP_API_URL + "/users?userId=" + userId
+			);
 			dispatch({ type: "UPDATE", payload: res.data });
 		};
 		fetchUser();

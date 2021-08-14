@@ -13,8 +13,16 @@ export default function Feed({ profile }) {
 	useEffect(() => {
 		const fetchPosts = async () => {
 			const res = profile
-				? await axios.get("/posts/profile/" + profile._id)
-				: await axios.get("/posts/timeline/" + user._id);
+				? await axios.get(
+						process.env.REACT_APP_API_URL +
+							"/posts/profile/" +
+							profile._id
+				  )
+				: await axios.get(
+						process.env.REACT_APP_API_URL +
+							"/posts/timeline/" +
+							user._id
+				  );
 			setPosts(
 				res.data.sort((p1, p2) => {
 					return new Date(p2.createdAt) - new Date(p1.createdAt);
