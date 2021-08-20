@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
+import "./app.css";
 
 import {
 	BrowserRouter as Router,
@@ -16,7 +17,7 @@ function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
 	return (
-		<Router basename="/friendbook">
+		<Router basename="/">
 			<Switch>
 				<Route exact path="/">
 					{isLoggedIn ? <Home /> : <Login />}
