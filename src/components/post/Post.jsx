@@ -157,7 +157,10 @@ export default function Post({ p }) {
 							<div className="postBottomLeft">
 								<img
 									className="likeIcon"
-									src={`${PF}/like.png`}
+									src={
+										process.env.PUBLIC_URL +
+										"/assets/like.png"
+									}
 									onClick={likeHandler}
 									alt=""
 								/>

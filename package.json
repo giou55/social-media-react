@@ -1,8 +1,6 @@
 {
 	"name": "social-media-react",
 	"version": "0.1.0",
-	"homepage1": "https://www.giourmetakis.gr/friendbook",
-	"homepage": ".",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.11.4",
@@ -45,5 +43,5 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy-old": "http://localhost:8800/api"
+	"proxy": "https://social-media-node-api.herokuapp.com/api"
 }

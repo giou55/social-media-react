@@ -9,7 +9,7 @@ export default function HomeRightbar() {
 				<div className="birthdayContainer">
 					<img
 						className="birthdayImg"
-						src="./assets/gift.png"
+						src={process.env.PUBLIC_URL + "/assets/gift.png"}
 						alt=""
 					/>
 					<span className="birthdayText">
@@ -17,7 +17,11 @@ export default function HomeRightbar() {
 						birthday today
 					</span>
 				</div>
-				<img className="rightbarAd" src="./assets/ad.jpg" alt="" />
+				<img
+					className="rightbarAd"
+					src={process.env.PUBLIC_URL + "/assets/ad.jpg"}
+					alt=""
+				/>
 				<h4 className="rightbarTitle">Online Friends</h4>
 				<ul className="rightbarFriendList">
 					{Users.map((u) => (

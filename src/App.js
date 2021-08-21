@@ -17,7 +17,7 @@ function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
 	return (
-		<Router basename="/">
+		<Router>
 			<Switch>
 				<Route exact path="/">
 					{isLoggedIn ? <Home /> : <Login />}
