@@ -11,6 +11,8 @@ import axios from "axios";
 
 export default function Share({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const desc = useRef();
 	const fileInput = useRef();
 	const [file, setFile] = useState(null);
@@ -50,14 +52,14 @@ export default function Share({ user }) {
 			data.append("file", file);
 			newpost.img = fileName;
 			try {
-				await axios.post("/upload/posts", data);
+				await axios.post(API_URL + "/upload/posts", data);
 			} catch (err) {
 				console.log(err);
 			}
 		}
 		try {
-			await axios.post("/posts", newpost);
-			window.location.reload();
+			await axios.post(API_URL + "/posts", newpost);
+			// window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}

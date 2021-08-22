@@ -18,6 +18,7 @@ export default function Post({ p }) {
 	const currentUser = useSelector((state) => state.user);
 
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
 
 	useEffect(() => {
 		setIsLiked(post.likes.includes(currentUser._id));
@@ -63,7 +64,7 @@ export default function Post({ p }) {
 
 	const deletePost = (postId) => {
 		try {
-			axios.delete("/posts/" + postId);
+			axios.delete(API_URL + "/posts/" + postId);
 			setIsDeleted(true);
 		} catch (err) {
 			console.log(err);
