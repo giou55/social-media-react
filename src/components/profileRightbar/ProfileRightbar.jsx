@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
+	
 	const user = useSelector((state) => state.user);
 
 	const [friends, setFriends] = useState([]);
@@ -117,8 +119,8 @@ export default function ProfileRightbar({ profile }) {
 								<img
 									src={
 										friend.profilePicture
-											? PF +
-											  "/users/" +
+											? API_URL +
+											  "/s3-images/" +
 											  friend.profilePicture
 											: PF + "/users/noAvatar.png"
 									}

@@ -104,8 +104,8 @@ export default function Post({ p }) {
 											className="postProfileImg"
 											src={
 												user.profilePicture
-													? PF +
-													  "/users/" +
+													? API_URL +
+													  "/s3-images/" +
 													  user.profilePicture
 													: PF + "/users/noAvatar.png"
 											}
