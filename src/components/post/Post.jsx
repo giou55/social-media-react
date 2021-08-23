@@ -91,9 +91,9 @@ export default function Post({ p }) {
 											className="postProfileImg"
 											src={
 												user.profilePicture
-													? PF +
-													  "/users/" +
-													  currentUser.profilePicture
+													? API_URL +
+													  "/s3-images/" +
+													  user.profilePicture
 													: PF + "/users/noAvatar.png"
 											}
 											alt=""
@@ -150,7 +150,11 @@ export default function Post({ p }) {
 							<span className="postText">{post?.desc}</span>
 							<img
 								className="postImg"
-								src={post.img ? PF + "/posts/" + post.img : ""}
+								src={
+									post.img
+										? API_URL + "/s3-images/" + post.img
+										: ""
+								}
 								alt=""
 							/>
 						</div>

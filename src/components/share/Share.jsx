@@ -50,16 +50,17 @@ export default function Share({ user }) {
 			const fileName = Date.now() + file.name;
 			data.append("name", fileName);
 			data.append("file", file);
-			newpost.img = fileName;
+			// newpost.img = fileName;
 			try {
-				await axios.post(API_URL + "/upload/posts", data);
+				const res = await axios.post(API_URL + "/upload/posts", data);
+				newpost.img = res.data.key;
 			} catch (err) {
 				console.log(err);
 			}
 		}
 		try {
 			await axios.post(API_URL + "/posts", newpost);
-			// window.location.reload();
+			window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}
@@ -73,7 +74,9 @@ export default function Share({ user }) {
 						className="shareProfileImg"
 						src={
 							user.profilePicture
-								? PF + "/users/" + user.profilePicture
+								? API_URL +
+								  "/s3-images/" +
+								  user.profilePicture
 								: PF + "/users/noAvatar.png"
 						}
 						alt=""

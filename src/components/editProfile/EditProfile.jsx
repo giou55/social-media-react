@@ -8,7 +8,10 @@ export default function EditProfile({ setEditProfile }) {
 	const editProfile = useRef();
 	const profileDesc = useRef();
 	const profileCity = useRef();
+
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const profile = useSelector((state) => state.user);
 	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
@@ -76,9 +79,11 @@ export default function EditProfile({ setEditProfile }) {
 			const fileName = Date.now() + newProfileImg.name;
 			data.append("name", fileName);
 			data.append("file", newProfileImg);
-			newprofile.profilePicture = fileName;
+			// newprofile.profilePicture = fileName;
 			try {
-				await axios.post("/upload/users", data);
+				const res = await axios.post(API_URL + "/upload/posts", data);
+				newprofile.profilePicture = res.data.key;
+				// await axios.post("/upload/users", data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -90,7 +95,9 @@ export default function EditProfile({ setEditProfile }) {
 			data.append("file", newCoverImg);
 			newprofile.coverPicture = fileName;
 			try {
-				await axios.post("/upload/users", data);
+				const res = await axios.post(API_URL + "/upload/posts", data);
+				newprofile.coverPicture = res.data.key;
+				// await axios.post("/upload/users", data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -127,8 +134,8 @@ export default function EditProfile({ setEditProfile }) {
 							<img
 								src={
 									profile.profilePicture
-										? PF +
-										  "/users/" +
+										? API_URL +
+										  "/s3-images/" +
 										  profile.profilePicture
 										: PF + "/users/noAvatar.png"
 								}
@@ -173,7 +180,9 @@ export default function EditProfile({ setEditProfile }) {
 							<img
 								src={
 									profile.coverPicture
-										? PF + "/users/" + profile.coverPicture
+										? API_URL +
+										  "/s3-images/" +
+										  profile.coverPicture
 										: PF + "/users/noCover.png"
 								}
 								alt=""

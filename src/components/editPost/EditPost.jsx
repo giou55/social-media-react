@@ -3,12 +3,9 @@ import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
 import axios from "axios";
 
-export default function EditPost({
-	post,
-	setEditPost,
-	updatePost,
-}) {
-	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+export default function EditPost({ post, setEditPost, updatePost }) {
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const editPost = useRef();
 	const postInput = useRef();
 	const [newImgFile, setNewImgFile] = useState("");
@@ -32,15 +29,16 @@ export default function EditPost({
 			const fileName = Date.now() + newImgFile.name;
 			data.append("name", fileName);
 			data.append("file", newImgFile);
-			newpost.img = fileName;
+			// newpost.img = fileName;
 			try {
-				await axios.post("/upload/posts", data);
+				const res = await axios.post(API_URL + "/upload/posts", data);
+				newpost.img = res.data.key;
 			} catch (err) {
 				console.log(err);
 			}
 		}
 		try {
-			await axios.put("/posts/" + post._id, newpost);
+			await axios.put(API_URL + "/posts/" + post._id, newpost);
 			updatePost(newpost);
 			setEditPost(false);
 		} catch (err) {
@@ -75,7 +73,7 @@ export default function EditPost({
 								<img
 									src={
 										post.img
-											? PF + "/posts/" + post.img
+											? API_URL + "/s3-images/" + post.img
 											: ""
 									}
 									alt=""

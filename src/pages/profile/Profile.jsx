@@ -10,6 +10,8 @@ import { useParams } from "react-router";
 
 export default function Profile() {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const [profile, setProfile] = useState("");
 
 	const fullname = useParams().fullname;
@@ -50,7 +52,9 @@ export default function Profile() {
 							<img
 								src={
 									profile.coverPicture
-										? PF + "/users/" + profile.coverPicture
+										? API_URL +
+										  "/s3-images/" +
+										  profile.coverPicture
 										: PF + "/users/noCover.png"
 								}
 								alt=""
@@ -59,8 +63,8 @@ export default function Profile() {
 							<img
 								src={
 									profile.profilePicture
-										? PF +
-										  "/users/" +
+										? API_URL +
+										  "/s3-images/" +
 										  profile.profilePicture
 										: PF + "/users/noAvatar.png"
 								}

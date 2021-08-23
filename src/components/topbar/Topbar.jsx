@@ -8,6 +8,8 @@ import axios from "axios";
 
 export default function Topbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
 	const [isDisplayedEditProfile, setIsDisplayedEditProfile] = useState(false);
 
@@ -77,7 +79,9 @@ export default function Topbar({ user }) {
 						<img
 							src={
 								user.profilePicture
-									? PF + "/users/" + user.profilePicture
+									? API_URL +
+									  "/s3-images/" +
+									  user.profilePicture
 									: PF + "/users/noAvatar.png"
 							}
 							alt=""
