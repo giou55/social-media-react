@@ -10,6 +10,12 @@ import EditPost from "../editPost/EditPost";
 export default function Post({ p }) {
 	const [post, setPost] = useState(p);
 	const [like, setLike] = useState(post.likes.length);
+	const [comments, setComments] = useState([
+		{ _id: 1, body: "Comment 1" },
+		{ _id: 2, body: "Comment 2" },
+		{ _id: 3, body: "Comment 3" },
+	]);
+	const [isDisplayedComments, setIsDisplayedComments] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
@@ -56,6 +62,10 @@ export default function Post({ p }) {
 		}
 		setLike(isLiked ? like - 1 : like + 1);
 		setIsLiked(!isLiked);
+	};
+
+	const commentsToggle = () => {
+		setIsDisplayedComments(!isDisplayedComments);
 	};
 
 	const toggleActions = () => {
@@ -176,10 +186,31 @@ export default function Post({ p }) {
 								</div>
 							</div>
 							<div className="postBottomRight">
-								<span className="postCommentText">
-									{post.comment} comments
+								<span
+									className="postCommentText"
+									onClick={commentsToggle}
+								>
+									{comments.length} comments
 								</span>
 							</div>
+						</div>
+
+						{isDisplayedComments && (
+							<div className="postCommentsDisplay">
+								{comments.map((comment) => (
+									<div key={comment._id}>{comment.body}</div>
+								))}
+							</div>
+						)}
+						<div className="postCommentsSubmit">
+							<form>
+								<input
+									type="text"
+									name=""
+									id=""
+									placeholder="Write a comment..."
+								/>
+							</form>
 						</div>
 					</div>
 				</div>

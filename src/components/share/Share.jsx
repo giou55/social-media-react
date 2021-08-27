@@ -74,9 +74,7 @@ export default function Share({ user }) {
 						className="shareProfileImg"
 						src={
 							user.profilePicture
-								? API_URL +
-								  "/s3-images/" +
-								  user.profilePicture
+								? API_URL + "/s3-images/" + user.profilePicture
 								: PF + "/users/noAvatar.png"
 						}
 						alt=""
@@ -125,15 +123,24 @@ export default function Share({ user }) {
 								ref={fileInput}
 							/>
 						</label>
-						<div className="shareOption">
+						<div
+							className="shareOption"
+							style={{ cursor: "not-allowed" }}
+						>
 							<Label htmlColor="blue" className="shareIcon" />
 							<span className="shareOptionText">Tag</span>
 						</div>
-						<div className="shareOption">
+						<div
+							className="shareOption"
+							style={{ cursor: "not-allowed" }}
+						>
 							<Room htmlColor="green" className="shareIcon" />
 							<span className="shareOptionText">Location</span>
 						</div>
-						<div className="shareOption">
+						<div
+							className="shareOption"
+							style={{ cursor: "not-allowed" }}
+						>
 							<EmojiEmotions
 								htmlColor="goldenrod"
 								className="shareIcon"

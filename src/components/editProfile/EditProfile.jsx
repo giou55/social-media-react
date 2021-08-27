@@ -15,11 +15,6 @@ export default function EditProfile({ setEditProfile }) {
 	const profile = useSelector((state) => state.user);
 	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
-	const [dayInput, setDayInput] = useState(profile.birthday.split("/")[0]);
-	const [monthInput, setMonthInput] = useState(
-		profile.birthday.split("/")[1]
-	);
-	const [yearInput, setYearInput] = useState(profile.birthday.split("/")[2]);
 
 	const dispatch = useDispatch();
 
@@ -46,18 +41,11 @@ export default function EditProfile({ setEditProfile }) {
 	};
 
 	const onBirthdayValueChange = (event) => {
-		const date = event.target.value.split("-");
-		let day = date[2];
-		let month = date[1];
-		let year = date[0];
 		const newprofile = {
 			...profile,
-			birthday: day + "/" + month + "/" + year,
+			birthday: event.target.value,
 		};
 		dispatch({ type: "UPDATE", payload: newprofile });
-		setDayInput(day);
-		setMonthInput(month);
-		setYearInput(year);
 	};
 
 	const onRelationshipValueChange = (event) => {
@@ -273,9 +261,7 @@ export default function EditProfile({ setEditProfile }) {
 							type="date"
 							id="birthday"
 							name="birthday"
-							value={
-								yearInput + "-" + monthInput + "-" + dayInput
-							}
+							value={profile.birthday}
 							onChange={onBirthdayValueChange}
 						></input>
 					</div>

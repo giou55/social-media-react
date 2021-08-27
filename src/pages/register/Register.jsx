@@ -8,26 +8,21 @@ export default function Register() {
 	const lastname = useRef();
 	const email = useRef();
 	const password = useRef();
-	const passwordAgain = useRef();
 	const history = useHistory();
 
 	const register = async (e) => {
 		e.preventDefault();
-		if (passwordAgain.current.value !== password.current.value) {
-			password.current.setCustomValidity("Passwords don't match!");
-		} else {
-			const user = {
-				firstname: firstname.current.value,
-				lastname: lastname.current.value,
-				email: email.current.value,
-				password: password.current.value,
-			};
-			try {
-				await axios.post("/auth/register", user);
-				history.push("/login");
-			} catch (err) {
-				console.log(err);
-			}
+		const user = {
+			firstname: firstname.current.value,
+			lastname: lastname.current.value,
+			email: email.current.value,
+			password: password.current.value,
+		};
+		try {
+			await axios.post("/auth/register", user);
+			history.push("/login");
+		} catch (err) {
+			console.log(err);
 		}
 	};
 
@@ -85,17 +80,6 @@ export default function Register() {
 							className="registerInput"
 							type="password"
 							minLength="6"
-						/>
-						<label htmlFor="psw-again">
-							<b>Password Again</b>
-						</label>
-						<input
-							name="psw-again"
-							id="psw-again"
-							required
-							ref={passwordAgain}
-							className="registerInput"
-							type="password"
 						/>
 						<button className="registerButton" type="submit">
 							Sign up

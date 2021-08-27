@@ -19,17 +19,19 @@ export default function Login() {
 			password: password.current.value,
 		};
 		try {
-			const res = await axios.post(API_URL + "/auth/login", userCredentials);
-			dispatch({ type: "LOGIN", payload: res.data });
-			localStorage.setItem("userId", res.data.userId);
-			localStorage.setItem("token", res.data.token);
-			localStorage.setItem("isLoggedIn", "true");
-			// if (res.data.message !== "") {
-			// 	setErrorMessage(res.data.message);
-			// } else {
-			// 	setErrorMessage("");
-			// 	authCtx.login(res.data);
-			// }
+			const res = await axios.post(
+				API_URL + "/auth/login",
+				userCredentials
+			);
+			if (res.data.message !== "") {
+				setErrorMessage(res.data.message);
+			} else {
+				setErrorMessage("");
+				dispatch({ type: "LOGIN", payload: res.data });
+				localStorage.setItem("userId", res.data.userId);
+				localStorage.setItem("token", res.data.token);
+				localStorage.setItem("isLoggedIn", "true");
+			}
 		} catch (err) {
 			console.log(err);
 		}
@@ -70,7 +72,7 @@ export default function Login() {
 							className="loginInput"
 							ref={password}
 						/>
-						{/* <div className="loginMessage">{errorMessage}</div> */}
+						<div className="loginMessage">{errorMessage}</div>
 						<button className="loginButton" type="submit">
 							Log in
 						</button>

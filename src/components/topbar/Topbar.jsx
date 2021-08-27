@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import EditProfile from "../editProfile/EditProfile";
-import axios from "axios";
 
 export default function Topbar({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -22,15 +21,6 @@ export default function Topbar({ user }) {
 	const showEditProfile = () => {
 		setIsDisplayedActions(false);
 		setIsDisplayedEditProfile(true);
-	};
-
-	const deleteAcount = (userId) => {
-		try {
-			axios.delete("/users/" + userId);
-			dispatch({ type: "LOGOUT" });
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	const logoutHandler = () => {
@@ -100,7 +90,6 @@ export default function Topbar({ user }) {
 								<div onClick={showEditProfile}>
 									Edit profile
 								</div>
-								<div onClick={deleteAcount}>Delete account</div>
 								<div onClick={logoutHandler}>Logout</div>
 							</div>
 						)}

@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 export default function ProfileRightbar({ profile }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const API_URL = process.env.REACT_APP_API_URL;
-	
+
 	const user = useSelector((state) => state.user);
 
 	const [friends, setFriends] = useState([]);
@@ -92,7 +92,13 @@ export default function ProfileRightbar({ profile }) {
 					<div className="rightbarInfoItem">
 						<span className="rightbarInfoKey">Birthday:</span>
 						<span className="rightbarInfoValue">
-							{profile.birthday ? profile.birthday : "-"}
+							{profile.birthday === "1970-01-01"
+								? "-"
+								: profile.birthday.split("-")[2] +
+								  "/" +
+								  profile.birthday.split("-")[1] +
+								  "/" +
+								  profile.birthday.split("-")[0]}
 						</span>
 					</div>
 					<div className="rightbarInfoItem">
