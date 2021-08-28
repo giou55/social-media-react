@@ -25,21 +25,21 @@ export default function Profile() {
 
 	useEffect(() => {
 		const fetchUser = async () => {
-			const res = await axios.get("/users?userId=" + userId);
+			const res = await axios.get(API_URL + "/users?userId=" + userId);
 			dispatch({ type: "UPDATE", payload: res.data });
 		};
 		fetchUser();
-	}, [userId, dispatch]);
+	}, [userId, dispatch, API_URL]);
 
 	useEffect(() => {
 		const fetchProfileData = async () => {
 			const res = await axios.get(
-				`/users?firstname=${firstname}&lastname=${lastname}`
+				`${API_URL}/users?firstname=${firstname}&lastname=${lastname}`
 			);
 			setProfile(res.data);
 		};
 		fetchProfileData();
-	}, [firstname, lastname, user]);
+	}, [firstname, lastname, user, API_URL]);
 
 	return (
 		<>

@@ -50,7 +50,6 @@ export default function Share({ user }) {
 			const fileName = Date.now() + file.name;
 			data.append("name", fileName);
 			data.append("file", file);
-			// newpost.img = fileName;
 			try {
 				const res = await axios.post(API_URL + "/upload/posts", data);
 				newpost.img = res.data.key;

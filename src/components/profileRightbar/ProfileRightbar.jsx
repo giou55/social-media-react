@@ -25,7 +25,7 @@ export default function ProfileRightbar({ profile }) {
 		const fetchUserFriends = async () => {
 			try {
 				const friendList = await axios.get(
-					`/users/friends/${profile._id}`
+					API_URL + `/users/friends/${profile._id}`
 				);
 				setFriends(friendList.data);
 			} catch (err) {
@@ -34,14 +34,17 @@ export default function ProfileRightbar({ profile }) {
 		};
 		setFollowed(profile.followers.includes(user?._id));
 		fetchUserFriends();
-	}, [profile, user]);
+	}, [profile, user, API_URL]);
 
 	const followingHandler = async () => {
 		try {
 			if (followed) {
-				await axios.put("/users/" + profile._id + "/unfollow", {
-					userId: user._id,
-				});
+				await axios.put(
+					API_URL + "/users/" + profile._id + "/unfollow",
+					{
+						userId: user._id,
+					}
+				);
 				const updatedUser = {
 					...user,
 					followings: user.followings.filter(
@@ -50,7 +53,7 @@ export default function ProfileRightbar({ profile }) {
 				};
 				dispatch({ type: "UNFOLLOW", payload: updatedUser });
 			} else {
-				await axios.put("/users/" + profile._id + "/follow", {
+				await axios.put(API_URL + "/users/" + profile._id + "/follow", {
 					userId: user._id,
 				});
 				const updatedUser = {

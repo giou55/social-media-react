@@ -70,7 +70,7 @@
 }
 
 .postCenter {
-	margin: 20px 0;
+	margin: 20px 0 0 0;
 }
 
 .postImg {
@@ -84,6 +84,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	margin: 20px 0 0 0;
 }
 
 .postBottomLeft {
@@ -109,9 +110,71 @@
 }
 
 .postCommentsDisplay {
+	margin: 10px 0 0 0;
+}
 
+.postCommentsWrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 10px 0 0 0;
+}
+
+.postCommentsBody {
+	padding: 10px;
+	margin-right: 10px;
+	background-color: #eee;
+	border: none;
+	border-radius: 20px;
+}
+
+.postCommentsBodyName {
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+}
+
+.postCommentsBodyText {
+	font-size: 15px;
+	color: #333;
+}
+
+.postCommentsBodyDelete {
+	font-size: 13px;
+	font-weight: bold;
+	color: #333;
+	cursor: pointer;
 }
 
 .postCommentsSubmit {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	margin: 10px 0 0 0;
+}
 
+.postCommentsImage {
+	width: 32px;
+	height: 32px;
+	margin-right: 10px;
+	border-radius: 50%;
+	object-fit: cover;
+	align-self: flex-start;
+}
+
+.postCommentsSubmitForm {
+	flex-grow: 1;
+}
+
+.postCommentsSubmitInput {
+	width: 100%;
+	height: 32px;
+	padding: 10px;
+	background-color: #eee;
+	border: none;
+	border-radius: 30px;
+}
+
+.postCommentsSubmitInput:focus {
+	outline: none;
 }

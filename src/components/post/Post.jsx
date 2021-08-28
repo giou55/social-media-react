@@ -1,20 +1,17 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "timeago.js";
 import EditPost from "../editPost/EditPost";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Post({ p }) {
 	const [post, setPost] = useState(p);
 	const [like, setLike] = useState(post.likes.length);
-	const [comments, setComments] = useState([
-		{ _id: 1, body: "Comment 1" },
-		{ _id: 2, body: "Comment 2" },
-		{ _id: 3, body: "Comment 3" },
-	]);
+	const [comments, setComments] = useState([]);
 	const [isDisplayedComments, setIsDisplayedComments] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
@@ -22,6 +19,8 @@ export default function Post({ p }) {
 	const [isDisplayedEditPost, setIsDisplayedEditPost] = useState(false);
 	const [user, setUser] = useState({});
 	const currentUser = useSelector((state) => state.user);
+
+	const commentInput = useRef();
 
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 	const API_URL = process.env.REACT_APP_API_URL;
@@ -35,9 +34,12 @@ export default function Post({ p }) {
 		const source = cancelToken.source();
 		const fetchUser = async () => {
 			try {
-				const res = await axios.get(`/users?userId=${post.userId}`, {
-					cancelToken: source.token,
-				});
+				const res = await axios.get(
+					API_URL + `/users?userId=${post.userId}`,
+					{
+						cancelToken: source.token,
+					}
+				);
 				setUser(res.data);
 			} catch (err) {
 				if (axios.isCancel(err)) {
@@ -50,7 +52,21 @@ export default function Post({ p }) {
 		return () => {
 			source.cancel("request cancelled");
 		};
-	}, [post.userId, currentUser]);
+	}, [post.userId, currentUser, API_URL]);
+
+	useEffect(() => {
+		const fetchPostComments = async () => {
+			try {
+				const commentList = await axios.get(
+					API_URL + `/posts/comments/${p._id}`
+				);
+				setComments(commentList.data);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		fetchPostComments();
+	}, [p, API_URL]);
 
 	const likeHandler = () => {
 		try {
@@ -65,7 +81,9 @@ export default function Post({ p }) {
 	};
 
 	const commentsToggle = () => {
-		setIsDisplayedComments(!isDisplayedComments);
+		if (comments.length > 0) {
+			setIsDisplayedComments(!isDisplayedComments);
+		}
 	};
 
 	const toggleActions = () => {
@@ -84,6 +102,32 @@ export default function Post({ p }) {
 	const showEditPost = () => {
 		setIsDisplayedActions(false);
 		setIsDisplayedEditPost(true);
+	};
+
+	const deleteComment = async (commentId, postId) => {
+		try {
+			await axios.delete(API_URL + `/comments/${commentId}/${postId}`);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const submitHandler = async (e) => {
+		e.preventDefault();
+		const newcomment = {
+			id: uuidv4(),
+			firstname: currentUser.firstname,
+			lastname: currentUser.lastname,
+			body: commentInput.current.value,
+			img: currentUser.profilePicture,
+		};
+		try {
+			await axios.put(API_URL + `/posts/${p._id}/comment`, newcomment);
+			setComments([...comments, newcomment]);
+			commentInput.current.value = "";
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	return (
@@ -198,17 +242,63 @@ export default function Post({ p }) {
 						{isDisplayedComments && (
 							<div className="postCommentsDisplay">
 								{comments.map((comment) => (
-									<div key={comment._id}>{comment.body}</div>
+									<div
+										key={comment.id}
+										className="postCommentsWrapper"
+									>
+										<img
+											src={
+												comment.img
+													? API_URL +
+													  "/s3-images/" +
+													  comment.img
+													: PF + "/users/noAvatar.png"
+											}
+											alt=""
+											className="postCommentsImage"
+										/>
+										<div className="postCommentsBody">
+											<div className="postCommentsBodyName">
+												{comment.firstname}{" "}
+												{comment.lastname}
+											</div>
+											<div className="postCommentsBodyText">
+												{comment.body}
+											</div>
+										</div>
+										{/* <div
+											className="postCommentsBodyDelete"
+											onClick={() =>
+												deleteComment(comment._id, p._id)
+											}
+										>
+											Delete
+										</div> */}
+									</div>
 								))}
 							</div>
 						)}
 						<div className="postCommentsSubmit">
-							<form>
+							<img
+								src={
+									currentUser.profilePicture
+										? API_URL +
+										  "/s3-images/" +
+										  currentUser.profilePicture
+										: PF + "/users/noAvatar.png"
+								}
+								alt=""
+								className="postCommentsImage"
+							/>
+							<form
+								className="postCommentsSubmitForm"
+								onSubmit={submitHandler}
+							>
 								<input
 									type="text"
-									name=""
-									id=""
+									ref={commentInput}
 									placeholder="Write a comment..."
+									className="postCommentsSubmitInput"
 								/>
 							</form>
 						</div>
