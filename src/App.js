@@ -17,7 +17,7 @@ function App() {
 	const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
 	return (
-		<Router>
+		<Router basename="/friendbook">
 			<Switch>
 				<Route exact path="/">
 					{isLoggedIn ? <Home /> : <Login />}

@@ -91,7 +91,7 @@ export default function EditProfile({ setEditProfile }) {
 			}
 		}
 		try {
-			await axios.put("/users/" + profile._id, newprofile);
+			await axios.put(API_URL + "/users/" + profile._id, newprofile);
 			dispatch({ type: "UPDATE", payload: newprofile });
 			setEditProfile(false);
 		} catch (err) {

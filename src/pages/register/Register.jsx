@@ -10,6 +10,8 @@ export default function Register() {
 	const password = useRef();
 	const history = useHistory();
 
+	const API_URL = process.env.REACT_APP_API_URL;
+
 	const register = async (e) => {
 		e.preventDefault();
 		const user = {
@@ -19,7 +21,7 @@ export default function Register() {
 			password: password.current.value,
 		};
 		try {
-			await axios.post("/auth/register", user);
+			await axios.post(API_URL + "/auth/register", user);
 			history.push("/login");
 		} catch (err) {
 			console.log(err);
