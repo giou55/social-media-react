@@ -13,7 +13,7 @@ export default function HomeRightbar() {
 						alt=""
 					/>
 					<span className="birthdayText">
-						<b>Pola foster</b> and <b>3 other friends</b> have a
+						<b>Dimitra Kiriazi</b> and <b>2 other friends</b> have a
 						birthday today
 					</span>
 				</div>

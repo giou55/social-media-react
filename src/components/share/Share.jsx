@@ -8,6 +8,7 @@ import {
 } from "@material-ui/icons";
 import { useRef, useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function Share({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -15,6 +16,8 @@ export default function Share({ user }) {
 
 	const desc = useRef();
 	const fileInput = useRef();
+	const history = useHistory();
+
 	const [file, setFile] = useState(null);
 	const [isDisabled, setIsDisabled] = useState(true);
 
@@ -59,7 +62,12 @@ export default function Share({ user }) {
 		}
 		try {
 			await axios.post(API_URL + "/posts", newpost);
-			window.location.reload();
+			if (window.location.pathname === "/friendbook/") {
+				window.location.reload();
+			} else {
+				history.push("/");
+			}
+			console.log(window.location.pathname);
 		} catch (err) {
 			console.log(err);
 		}

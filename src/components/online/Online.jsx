@@ -1,15 +1,20 @@
 import "./online.css";
 
-export default function Online({user}) {
+export default function Online({ user }) {
 	const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+	const API_URL = process.env.REACT_APP_API_URL;
 
-    return (
+	return (
 		<li className="rightbarFriend">
 			<div className="rightbarProfileImgContainer">
 				<img
-					src={PF + "/users/" + user.profilePicture}
-					alt=""
 					className="rightbarProfileImg"
+					src={
+						user.profilePicture
+							? API_URL + "/s3-images/" + user.profilePicture
+							: PF + "/users/noAvatar.png"
+					}
+					alt=""
 				/>
 				<span className="rightbarOnline"></span>
 			</div>

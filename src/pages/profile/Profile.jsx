@@ -55,6 +55,7 @@ export default function Profile() {
 										? API_URL +
 										  "/s3-images/" +
 										  profile.coverPicture
+										  
 										: PF + "/users/noCover.png"
 								}
 								alt=""

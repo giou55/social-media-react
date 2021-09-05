@@ -2,6 +2,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import Profile from "./pages/profile/Profile";
+import NotFound from "./pages/notFound/NotFound";
 import "./app.css";
 
 import {
@@ -30,6 +31,9 @@ function App() {
 				</Route>
 				<Route path="/profile/:fullname">
 					{isLoggedIn ? <Profile /> : <Redirect to="/login" />}
+				</Route>
+				<Route path="*">
+					<NotFound />
 				</Route>
 			</Switch>
 		</Router>

@@ -35,7 +35,9 @@ export default function Feed({ profile }) {
 	return (
 		<div className="feed">
 			<div className="feedWrapper">
-				{(!profile || profile._id === user._id) && <Share user={user} />}
+				{(!profile || profile._id === user._id) && (
+					<Share user={user} />
+				)}
 				{posts && posts.length > 0 ? "" : "No Posts"}
 				{posts.map((p) => (
 					<Post key={p._id} p={p} />

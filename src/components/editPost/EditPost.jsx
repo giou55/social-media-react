@@ -29,7 +29,6 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 			const fileName = Date.now() + newImgFile.name;
 			data.append("name", fileName);
 			data.append("file", newImgFile);
-			// newpost.img = fileName;
 			try {
 				const res = await axios.post(API_URL + "/upload/posts", data);
 				newpost.img = res.data.key;
