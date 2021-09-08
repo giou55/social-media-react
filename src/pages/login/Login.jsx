@@ -2,12 +2,14 @@ import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import "./login.css";
 import { Link } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 export default function Login() {
 	const email = useRef();
 	const password = useRef();
 	const [errorMessage, setErrorMessage] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const dispatch = useDispatch();
 
 	const API_URL = process.env.REACT_APP_API_URL;
@@ -18,11 +20,13 @@ export default function Login() {
 			email: email.current.value,
 			password: password.current.value,
 		};
+		setIsLoading(true);
 		try {
 			const res = await axios.post(
 				API_URL + "/auth/login",
 				userCredentials
 			);
+			setIsLoading(false);
 			if (res.data.message !== "") {
 				setErrorMessage(res.data.message);
 			} else {
@@ -74,7 +78,11 @@ export default function Login() {
 						/>
 						<div className="loginMessage">{errorMessage}</div>
 						<button className="loginButton" type="submit">
-							Log in
+							{isLoading ? (
+								<CircularProgress color="white" size="26px" />
+							) : (
+								"Log in"
+							)}
 						</button>
 						<Link to="/register">
 							<button className="loginRegisterButton">

@@ -1,6 +1,7 @@
 import "./register.css";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 export default function Register() {
@@ -9,6 +10,7 @@ export default function Register() {
 	const email = useRef();
 	const password = useRef();
 	const history = useHistory();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const API_URL = process.env.REACT_APP_API_URL;
 
@@ -20,8 +22,10 @@ export default function Register() {
 			email: email.current.value,
 			password: password.current.value,
 		};
+		setIsLoading(true);
 		try {
 			await axios.post(API_URL + "/auth/register", user);
+			setIsLoading(false);
 			history.push("/login");
 		} catch (err) {
 			console.log(err);
@@ -84,7 +88,11 @@ export default function Register() {
 							minLength="6"
 						/>
 						<button className="registerButton" type="submit">
-							Sign up
+							{isLoading ? (
+								<CircularProgress color="white" size="26px" />
+							) : (
+								"Sign up"
+							)}
 						</button>
 						<Link to="/login">
 							<button className="registerLoginButton">
