@@ -1,8 +1,22 @@
 import "./homerightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/Online";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 
-export default function HomeRightbar() {
+export default function HomeRightbar({ user }) {
+	const [users, setUsers] = useState(null);
+
+	useEffect(() => {
+		const fetchRandomUsers = async () => {
+			const res = await axios.get(
+				process.env.REACT_APP_API_URL + "/users/random"
+			);
+			setUsers(res.data);
+		};
+		fetchRandomUsers();
+	}, []);
+
 	return (
 		<div className="rightbar">
 			<div className="rightbarWrapper">
@@ -23,11 +37,28 @@ export default function HomeRightbar() {
 					alt=""
 				/>
 				<h4 className="rightbarTitle">Online Friends</h4>
-				<ul className="rightbarFriendList">
-					{Users.map((u) => (
-						<Online key={u.id} user={u} />
-					))}
-				</ul>
+				
+				{users && (
+					<ul className="rightbarFriendList">
+						{users.map(
+							(u) =>
+								u._id !== user._id && (
+									<Link
+										key={u._id}
+										to={
+											"/profile/" +
+											u.firstname +
+											"." +
+											u.lastname
+										}
+										style={{ textDecoration: "none" }}
+									>
+										<Online key={u._id} user={u} />
+									</Link>
+								)
+						)}
+					</ul>
+				)}
 			</div>
 		</div>
 	);

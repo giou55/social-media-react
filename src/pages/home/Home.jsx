@@ -30,7 +30,7 @@ export default function Home() {
 				<div className="homeContainer">
 					<Sidebar user={user} />
 					<Feed />
-					<HomeRightbar />
+					<HomeRightbar user={user} />
 				</div>
 			)}
 		</>

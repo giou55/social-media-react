@@ -18,16 +18,17 @@ export default function ProfileRightbar({ profile }) {
 	const dispatch = useDispatch();
 
 	if (profile._id === user._id) {
-		profile = user;
+		profile._id = user._id;
 	}
 
 	useEffect(() => {
 		const fetchUserFriends = async () => {
 			try {
-				const friendList = await axios.get(
+				const friendsList = await axios.get(
 					API_URL + `/users/friends/${profile._id}`
 				);
-				setFriends(friendList.data);
+				console.log(friendsList);
+				setFriends(friendsList.data);
 			} catch (err) {
 				console.log(err);
 			}
@@ -113,7 +114,8 @@ export default function ProfileRightbar({ profile }) {
 				</div>
 				<h4 className="rightbarTitle">Following</h4>
 				<div className="rightbarFollowings">
-					{friends.map((friend) => (
+				{friends && 
+					friends.map((friend) => (
 						<Link
 							key={friend._id}
 							to={

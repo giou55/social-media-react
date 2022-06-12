@@ -234,7 +234,7 @@ export default function Post({ p }) {
 									className="postCommentText"
 									onClick={commentsToggle}
 								>
-									{comments.length} comments
+									{comments.length === 1 ? (comments.length+" comment") : (comments.length+" comments")}
 								</span>
 							</div>
 						</div>
