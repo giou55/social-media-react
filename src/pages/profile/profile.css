@@ -1,5 +1,18 @@
 .profile {
     display: flex;
+    padding: 0;
+}
+
+@media screen and (min-width: 1600px) {
+	.profile {
+		padding: 0 200px 0 200px;
+	}
+}
+
+@media screen and (min-width: 2000px) {
+	.profile {
+		padding: 0 400px 0 400px;
+	}
 }
 
 .profileRight {

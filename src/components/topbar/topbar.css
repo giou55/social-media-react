@@ -7,7 +7,21 @@
 	position: sticky;
 	top: 0;
 	z-index: 9999;
+	padding: 0;
 }
+
+@media screen and (min-width: 1600px) {
+	.topbarContainer {
+		padding: 0 200px 0 200px;
+	}
+}
+
+@media screen and (min-width: 2000px) {
+	.topbarContainer {
+		padding: 0 400px 0 400px;
+	}
+}
+
 
 .topbarLeft {
 	flex: 3;
