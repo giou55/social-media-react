@@ -90,9 +90,11 @@ export default function Post({ p }) {
 		setIsDisplayedActions(!isDisplayedActions);
 	};
 
-	const deletePost = (postId) => {
+	const deletePost = async (post) => {
+		console.log(post);
 		try {
-			axios.delete(API_URL + "/posts/" + postId);
+			await axios.delete(API_URL + "/posts/" + post._id);
+			await axios.get(API_URL + "/s3-images/delete/" + post.img);
 			setIsDeleted(true);
 		} catch (err) {
 			console.log(err);
@@ -189,7 +191,7 @@ export default function Post({ p }) {
 												</div>
 												<div
 													onClick={() =>
-														deletePost(post._id)
+														deletePost(post)
 													}
 												>
 													Delete post
