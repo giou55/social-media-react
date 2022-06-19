@@ -1,10 +1,10 @@
-import "./editPost.css";
+import "./editComment.css";
 import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
-export default function EditPost({ post, setEditPost, updatePost }) {
+export default function EditComment({ post, setEditPost, updatePost }) {
 	const API_URL = process.env.REACT_APP_API_URL;
 
 	const editPost = useRef();

@@ -1,11 +1,12 @@
 import "./post.css";
-import { MoreVert } from "@material-ui/icons";
+import { MoreHoriz } from "@material-ui/icons";
 import { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "timeago.js";
-import EditPost from "../editPost/EditPost";
+import EditPost from "../editPost/editPost";
+import EditComment from "../editComment/editComment";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Post({ p }) {
@@ -15,8 +16,10 @@ export default function Post({ p }) {
 	const [isDisplayedComments, setIsDisplayedComments] = useState(false);
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
-	const [isDisplayedActions, setIsDisplayedActions] = useState(false);
+	const [isDisplayedPostActions, setIsDisplayedPostActions] = useState(false);
+	const [isDisplayedCommentActions, setIsDisplayedCommentActions] = useState(false);
 	const [isDisplayedEditPost, setIsDisplayedEditPost] = useState(false);
+	const [isDisplayedEditComment, setIsDisplayedEditComment] = useState(false);
 	const [user, setUser] = useState({});
 	const currentUser = useSelector((state) => state.user);
 
@@ -86,8 +89,12 @@ export default function Post({ p }) {
 		}
 	};
 
-	const toggleActions = () => {
-		setIsDisplayedActions(!isDisplayedActions);
+	const togglePostActions = () => {
+		setIsDisplayedPostActions(!isDisplayedPostActions);
+	};
+
+	const toggleCommentActions = () => {
+		setIsDisplayedCommentActions(!isDisplayedCommentActions);
 	};
 
 	const deletePost = async (post) => {
@@ -103,8 +110,13 @@ export default function Post({ p }) {
 	};
 
 	const showEditPost = () => {
-		setIsDisplayedActions(false);
+		setIsDisplayedPostActions(false);
 		setIsDisplayedEditPost(true);
+	};
+
+	const showEditComment = () => {
+		setIsDisplayedCommentActions(false);
+		setIsDisplayedEditComment(true);
 	};
 
 	const deleteComment = async (commentId, postId) => {
@@ -180,12 +192,12 @@ export default function Post({ p }) {
 							<div className="postTopRight">
 								{user._id === currentUser._id && (
 									<>
-										<MoreVert
+										<MoreHoriz
 											fontSize="large"
 											className="moreVertIcon"
-											onClick={toggleActions}
+											onClick={togglePostActions}
 										/>
-										{isDisplayedActions && (
+										{isDisplayedPostActions && (
 											<div className="postTopRightActions">
 												<div onClick={showEditPost}>
 													Edit post
@@ -260,6 +272,7 @@ export default function Post({ p }) {
 											alt=""
 											className="postCommentsImage"
 										/>
+
 										<div className="postCommentsBody">
 											<div className="postCommentsBodyName">
 												{comment.firstname}{" "}
@@ -269,14 +282,32 @@ export default function Post({ p }) {
 												{comment.body}
 											</div>
 										</div>
-										{/* <div
-											className="postCommentsBodyDelete"
-											onClick={() =>
-												deleteComment(comment._id, p._id)
-											}
-										>
-											Delete
-										</div> */}
+
+										<div className="postCommentActions">
+											{user._id === currentUser._id && (
+												<>
+													<MoreHoriz
+														fontSize="medium"
+														className="moreVertIcon"
+														onClick={toggleCommentActions}
+													/>
+													{isDisplayedCommentActions && (
+														<div className="commentActions">
+															<div onClick={showEditComment}>
+																Edit comment
+															</div>
+															<div
+																onClick={() =>
+																	deletePost(post)
+																}
+															>
+																Delete comment
+															</div>
+														</div>
+													)}
+												</>
+											)}
+										</div>
 									</div>
 								))}
 							</div>
@@ -310,6 +341,13 @@ export default function Post({ p }) {
 			)}
 			{isDisplayedEditPost && (
 				<EditPost
+					post={post}
+					setEditPost={setIsDisplayedEditPost}
+					updatePost={setPost}
+				/>
+			)}
+			{isDisplayedEditComment && (
+				<EditComment
 					post={post}
 					setEditPost={setIsDisplayedEditPost}
 					updatePost={setPost}

@@ -67,7 +67,6 @@ export default function Share({ user }) {
 			} else {
 				history.push("/");
 			}
-			console.log(window.location.pathname);
 		} catch (err) {
 			console.log(err);
 		}

@@ -103,6 +103,10 @@
 	font-size: 15px;
 }
 
+.postCommentActions {
+	cursor: pointer;
+}
+
 .postCommentText {
 	cursor: pointer;
 	border-bottom: 1px dashed gray;
