@@ -91,10 +91,11 @@ export default function Post({ p }) {
 	};
 
 	const deletePost = async (post) => {
-		console.log(post);
 		try {
 			await axios.delete(API_URL + "/posts/" + post._id);
-			await axios.get(API_URL + "/s3-images/delete/" + post.img);
+			if(post.img){
+				axios.get(API_URL + "/s3-images/delete/" + post.img);
+			}
 			setIsDeleted(true);
 		} catch (err) {
 			console.log(err);

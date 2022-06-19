@@ -27,7 +27,6 @@ export default function ProfileRightbar({ profile }) {
 				const friendsList = await axios.get(
 					API_URL + `/users/friends/${profile._id}`
 				);
-				console.log(friendsList);
 				setFriends(friendsList.data);
 			} catch (err) {
 				console.log(err);

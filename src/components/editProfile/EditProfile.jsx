@@ -2,6 +2,7 @@ import "./editProfile.css";
 import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 export default function EditProfile({ setEditProfile }) {
@@ -15,6 +16,7 @@ export default function EditProfile({ setEditProfile }) {
 	const profile = useSelector((state) => state.user);
 	const [newProfileImg, setNewProfileImg] = useState("");
 	const [newCoverImg, setNewCoverImg] = useState("");
+	const [isSaving, setIsSaving] = useState(false);
 
 	const dispatch = useDispatch();
 
@@ -57,6 +59,7 @@ export default function EditProfile({ setEditProfile }) {
 	};
 
 	const saveProfile = async () => {
+		setIsSaving(true);
 		const newprofile = {
 			...profile,
 			desc: profileDesc.current.innerText,
@@ -70,6 +73,9 @@ export default function EditProfile({ setEditProfile }) {
 			// newprofile.profilePicture = fileName;
 			try {
 				const res = await axios.post(API_URL + "/upload/posts", data);
+				if(profile.profilePicture){
+					axios.get(API_URL + "/s3-images/delete/" + profile.profilePicture);
+				}
 				newprofile.profilePicture = res.data.key;
 				// await axios.post("/upload/users", data);
 			} catch (err) {
@@ -84,6 +90,9 @@ export default function EditProfile({ setEditProfile }) {
 			newprofile.coverPicture = fileName;
 			try {
 				const res = await axios.post(API_URL + "/upload/posts", data);
+				if(profile.coverPicture){
+					axios.get(API_URL + "/s3-images/delete/" + profile.coverPicture);
+				}
 				newprofile.coverPicture = res.data.key;
 				// await axios.post("/upload/users", data);
 			} catch (err) {
@@ -93,7 +102,8 @@ export default function EditProfile({ setEditProfile }) {
 		try {
 			await axios.put(API_URL + "/users/" + profile._id, newprofile);
 			dispatch({ type: "UPDATE", payload: newprofile });
-			setEditProfile(false);
+			closeEditProfile();
+			setIsSaving(false);
 		} catch (err) {
 			console.log(err);
 		}
@@ -302,7 +312,11 @@ export default function EditProfile({ setEditProfile }) {
 				</form>
 
 				<button className="editProfileButton" onClick={saveProfile}>
-					Save
+				{isSaving ? (
+								<CircularProgress style={{ color: '#fff' }} size="14px" />
+							) : (
+								"Save"
+							)}
 				</button>
 			</div>
 		</div>

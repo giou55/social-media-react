@@ -79,7 +79,7 @@ export default function Login() {
 						<div className="loginMessage">{errorMessage}</div>
 						<button className="loginButton" type="submit">
 							{isLoading ? (
-								<CircularProgress color="white" size="26px" />
+								<CircularProgress color="info" size="26px" />
 							) : (
 								"Log in"
 							)}

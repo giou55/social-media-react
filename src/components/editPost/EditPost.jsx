@@ -1,6 +1,7 @@
 import "./editPost.css";
 import { Cancel } from "@material-ui/icons";
 import { useRef, useState } from "react";
+import { CircularProgress } from "@material-ui/core";
 import axios from "axios";
 
 export default function EditPost({ post, setEditPost, updatePost }) {
@@ -9,6 +10,7 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 	const editPost = useRef();
 	const postInput = useRef();
 	const [newImgFile, setNewImgFile] = useState("");
+	const [isSaving, setIsSaving] = useState(false);
 
 	const closeEditPost = () => {
 		setEditPost(false);
@@ -20,6 +22,7 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 	};
 
 	const savePost = async () => {
+		setIsSaving(true);
 		const newpost = {
 			...post,
 			desc: postInput.current.innerText,
@@ -31,6 +34,9 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 			data.append("file", newImgFile);
 			try {
 				const res = await axios.post(API_URL + "/upload/posts", data);
+				if(post.img){
+					axios.get(API_URL + "/s3-images/delete/" + post.img);
+				}
 				newpost.img = res.data.key;
 			} catch (err) {
 				console.log(err);
@@ -39,7 +45,8 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 		try {
 			await axios.put(API_URL + "/posts/" + post._id, newpost);
 			updatePost(newpost);
-			setEditPost(false);
+			closeEditPost();
+			setIsSaving(false);
 		} catch (err) {
 			console.log(err);
 		}
@@ -116,7 +123,11 @@ export default function EditPost({ post, setEditPost, updatePost }) {
 				)}
 
 				<button className="editPostButton" onClick={savePost}>
-					Save
+				{isSaving ? (
+								<CircularProgress style={{ color: '#fff' }} size="14px" />
+							) : (
+								"Save"
+							)}
 				</button>
 			</div>
 		</div>

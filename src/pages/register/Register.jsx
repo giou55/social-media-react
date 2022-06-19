@@ -89,7 +89,7 @@ export default function Register() {
 						/>
 						<button className="registerButton" type="submit">
 							{isLoading ? (
-								<CircularProgress color="white" size="26px" />
+								<CircularProgress color="info" size="26px" />
 							) : (
 								"Sign up"
 							)}
