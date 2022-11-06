@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { format } from "timeago.js";
 import EditPost from "../editPost/editPost";
-import EditComment from "../editComment/editComment";
+import Comment from "../comment/Comment";
+//import EditComment from "../editComment/editComment";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Post({ p }) {
@@ -17,9 +18,9 @@ export default function Post({ p }) {
 	const [isDeleted, setIsDeleted] = useState(false);
 	const [isLiked, setIsLiked] = useState(false);
 	const [isDisplayedPostActions, setIsDisplayedPostActions] = useState(false);
-	const [isDisplayedCommentActions, setIsDisplayedCommentActions] = useState(false);
+	//const [isDisplayedCommentActions, setIsDisplayedCommentActions] = useState(false);
 	const [isDisplayedEditPost, setIsDisplayedEditPost] = useState(false);
-	const [isDisplayedEditComment, setIsDisplayedEditComment] = useState(false);
+	//const [isDisplayedEditComment, setIsDisplayedEditComment] = useState(false);
 	const [user, setUser] = useState({});
 	const currentUser = useSelector((state) => state.user);
 
@@ -93,9 +94,9 @@ export default function Post({ p }) {
 		setIsDisplayedPostActions(!isDisplayedPostActions);
 	};
 
-	const toggleCommentActions = () => {
-		setIsDisplayedCommentActions(!isDisplayedCommentActions);
-	};
+	// const toggleCommentActions = () => {
+	// 	setIsDisplayedCommentActions(!isDisplayedCommentActions);
+	// };
 
 	const deletePost = async (post) => {
 		try {
@@ -114,18 +115,18 @@ export default function Post({ p }) {
 		setIsDisplayedEditPost(true);
 	};
 
-	const showEditComment = () => {
-		setIsDisplayedCommentActions(false);
-		setIsDisplayedEditComment(true);
-	};
+	// const showEditComment = () => {
+	// 	setIsDisplayedCommentActions(false);
+	// 	setIsDisplayedEditComment(true);
+	// };
 
-	const deleteComment = async (commentId, postId) => {
-		try {
-			await axios.delete(API_URL + `/comments/${commentId}/${postId}`);
-		} catch (err) {
-			console.log(err);
-		}
-	};
+	// const deleteComment = async (commentId, postId) => {
+	// 	try {
+	// 		await axios.delete(API_URL + `/comments/${commentId}/${postId}`);
+	// 	} catch (err) {
+	// 		console.log(err);
+	// 	}
+	// };
 
 	const submitHandler = async (e) => {
 		e.preventDefault();
@@ -257,58 +258,11 @@ export default function Post({ p }) {
 						{isDisplayedComments && (
 							<div className="postCommentsDisplay">
 								{comments.map((comment) => (
-									<div
-										key={comment.id}
-										className="postCommentsWrapper"
-									>
-										<img
-											src={
-												comment.img
-													? API_URL +
-													  "/s3-images/" +
-													  comment.img
-													: PF + "/users/noAvatar.png"
-											}
-											alt=""
-											className="postCommentsImage"
-										/>
-
-										<div className="postCommentsBody">
-											<div className="postCommentsBodyName">
-												{comment.firstname}{" "}
-												{comment.lastname}
-											</div>
-											<div className="postCommentsBodyText">
-												{comment.body}
-											</div>
-										</div>
-
-										<div className="postCommentActions">
-											{user._id === currentUser._id && (
-												<>
-													<MoreHoriz
-														fontSize="medium"
-														className="moreVertIcon"
-														onClick={toggleCommentActions}
-													/>
-													{isDisplayedCommentActions && (
-														<div className="commentActions">
-															<div onClick={showEditComment}>
-																Edit comment
-															</div>
-															<div
-																onClick={() =>
-																	deletePost(post)
-																}
-															>
-																Delete comment
-															</div>
-														</div>
-													)}
-												</>
-											)}
-										</div>
-									</div>
+									<Comment
+										comment={comment}
+										p={p}
+										user={user}
+									 />
 								))}
 							</div>
 						)}
@@ -346,13 +300,13 @@ export default function Post({ p }) {
 					updatePost={setPost}
 				/>
 			)}
-			{isDisplayedEditComment && (
+			{/* {isDisplayedEditComment && (
 				<EditComment
 					post={post}
 					setEditPost={setIsDisplayedEditPost}
 					updatePost={setPost}
 				/>
-			)}
+			)} */}
 		</>
 	);
 }
